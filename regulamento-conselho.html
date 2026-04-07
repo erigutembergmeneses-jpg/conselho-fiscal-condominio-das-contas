@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regulamento do Conselho Fiscal | Conselho Fiscal: Com Domínio das Contas</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f4f7fc;
+            font-family: 'Inter', sans-serif;
+            color: #1a2c3e;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0b2b3b 0%, #123e52 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-bottom-left-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .header h1 i { color: #ffcd7e; margin-right: 0.5rem; }
+        .header p { opacity: 0.9; font-size: 1rem; max-width: 700px; margin: 0 auto; }
+        .breadcrumb {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+        .breadcrumb a {
+            color: #ffcd7e;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Card do Regulamento */
+        .regulamento-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .regulamento-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: #0f2e3f;
+            border-left: 5px solid #f5a623;
+            padding-left: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .capitulo {
+            margin: 2rem 0 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed #e2edf2;
+        }
+        .capitulo:last-child { border-bottom: none; }
+
+        .capitulo-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            color: #1c4e6c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .capitulo-title i { color: #f5a623; }
+
+        .artigo {
+            margin: 1rem 0;
+            padding-left: 1rem;
+            border-left: 3px solid #dce6ec;
+        }
+        .artigo-numero {
+            font-weight: 600;
+            color: #0b4b66;
+            margin-bottom: 0.3rem;
+        }
+        .artigo-texto {
+            color: #2c5a74;
+            text-align: justify;
+        }
+        .artigo-texto strong { color: #1a2c3e; }
+
+        .inciso {
+            margin: 0.5rem 0 0.5rem 1.5rem;
+            color: #2c5a74;
+        }
+
+        /* Botões de Ação */
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #f5a623 0%, #e69500 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245,166,35,0.3);
+        }
+        .btn-outline {
+            background: white;
+            color: #1c6e8f;
+            border: 2px solid #cfdfe8;
+        }
+        .btn-outline:hover {
+            background: #f0f4f9;
+            border-color: #b8cfdd;
+        }
+
+        /* Nota de Rodapé */
+        .footer-note {
+            background: #eef4f8;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #2c5a74;
+            border-left: 4px solid #f5a623;
+        }
+        .footer-note i { color: #f5a623; margin-right: 0.5rem; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: #e2edf2;
+            color: #2c5a74;
+            font-size: 0.85rem;
+            margin-top: 3rem;
+            border-top-left-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+        }
+        footer a {
+            color: #1c6e8f;
+            text-decoration: none;
+        }
+        footer a:hover { text-decoration: underline; }
+
+        /* Responsividade */
+        @media (max-width: 700px) {
+            .header h1 { font-size: 1.4rem; }
+            .regulamento-card { padding: 1.5rem; }
+            .action-bar { flex-direction: column; align-items: center; }
+            .btn { width: 100%; justify-content: center; }
+        }
+
+        /* Utilitários para impressão */
+        @media print {
+            .header, .action-bar, footer { display: none; }
+            body { background: white; }
+            .regulamento-card { box-shadow: none; padding: 0; }
+            .artigo { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <h1><i class="fas fa-file-contract"></i> Regulamento do Conselho Fiscal</h1>
+    <p>Conselho Fiscal: Com Domínio das Contas</p>
+    <div class="breadcrumb">
+        <a href="index.html"><i class="fas fa-home"></i> Início</a> 
+        <i class="fas fa-chevron-right" style="margin:0 0.5rem;font-size:0.8rem;"></i> 
+        <span>Regulamento</span>
+    </div>
+</header>
+
+<div class="container">
+    
+    <!-- Barra de Ações -->
+    <div class="action-bar">
+        <button class="btn btn-primary" onclick="window.print()">
+            <i class="fas fa-print"></i> Imprimir / Salvar PDF
+        </button>
+        <a href="index.html" class="btn btn-outline">
+            <i class="fas fa-arrow-left"></i> Voltar para Início
+        </a>
+    </div>
+
+    <!-- Conteúdo do Regulamento -->
+    <div class="regulamento-card">
+        
+        <div class="regulamento-title">
+            <i class="fas fa-gavel"></i> REGULAMENTO DO CONSELHO FISCAL DO CONDOMÍNIO [NOME]
+        </div>
+
+        <!-- CAPÍTULO I -->
+        <div class="capitulo">
+            <h2 class="capitulo-title"><i class="fas fa-book"></i> CAPÍTULO I – DISPOSIÇÕES PRELIMINARES</h2>
+            
+            <div class="artigo">
+                <div class="artigo-numero">Art. 1º</div>
+                <div class="artigo-texto">
+                    O Conselho Fiscal é órgão de fiscalização permanente, autônomo e independente da administração, composto por membros efetivos e suplentes, eleitos em Assembleia Geral de Condôminos.
+                </div>
+            </div>
+
+            <div class="artigo">
+                <div class="artigo-numero">Art. 2º</div>
+                <div class="artigo-texto">
+                    Este regulamento rege-se pelo <strong>Código Civil Brasileiro (arts. 1.331 a 1.358)</strong> e pela <strong>Lei nº 4.591/1964</strong>, inspirando-se, subsidiariamente, nos princípios de governança e fiscalização previstos no Conselho Fiscal das Sociedades por Ações (Lei 6.404/1976), devidamente adaptados à natureza jurídica e às peculiaridades dos condomínios edilícios.
+                </div>
+            </div>
+
+            <div class="artigo">
+                <div class="artigo-numero">Art. 3º</div>
+                <div class="artigo-texto">
+                    O mandato dos conselheiros será de <strong>2 (dois) anos</strong>, permitida uma única recondução consecutiva. É vedada a acumulação com os cargos de síndico ou subsíndico, bem como a eleição de cônjuge, companheiro ou parente até o 2º grau com estes, sob pena de nulidade da eleição.
+                </div>
+            </div>
+
+            <div class="artigo">
+                <div class="artigo-numero">Art. 4º</div>
+                <div class="artigo-texto">
+                    Em caso de vacância, impedimento ou renúncia, o suplente assumirá automaticamente. A ausência injustificada a <strong>3 (três) reuniões consecutivas</strong> ou a <strong>5 (cinco) alternadas</strong> no mesmo exercício configura renúncia tácita, sendo o cargo preenchido pelo próximo suplente da chapa mais votada.
+                </div>
+            </div>
+        </div>
+
+        <!-- CAPÍTULO II -->
+        <div class="capitulo">
+            <h2 class="capitulo-title"><i class="fas fa-list-check"></i> CAPÍTULO II – COMPETÊNCIAS</h2>
+            
+            <div class="artigo">
+                <div class="artigo-numero">Art. 5º</div>
+                <div class="artigo-texto">Compete ao Conselho Fiscal:</div>
+                <div class="inciso"><strong>I –</strong> Fiscalizar, por qualquer de seus membros, os atos do síndico e demais órgãos de gestão, verificando o estrito cumprimento dos deveres legais, estatutários e regimentais;</div>
+                <div class="inciso"><strong>II –</strong> Emitir parecer fundamentado sobre a prestação de contas anual da administração, podendo solicitar informações complementares, documentação comprobatória, laudos técnicos ou auditorias externas que julgar necessárias à deliberação assemblear;</div>
+                <div class="inciso"><strong>III –</strong> Opinar, previamente, sobre as propostas da administração a serem submetidas à Assembleia Geral, relativas a contribuições extraordinárias (rateios), alteração de critérios de rateio, aquisição de bens, planos de investimento e orçamentos para obras, manutenções ou contratação de produtos e serviços;</div>
+                <div class="inciso"><strong>IV –</strong> Denunciar à Assembleia Geral, por meio de qualquer de seus membros, irregularidades, desvios de finalidade ou atos lesivos ao patrimônio condominial, exigindo as providências cabíveis. Na inércia da assembleia ou na pactuação com os desmandos, o Conselho poderá, por deliberação majoritária de seus membros, ajuizar as medidas judiciais ou extrajudiciais pertinentes à defesa dos interesses condominiais;</div>
+                <div class="inciso"><strong>V –</strong> Convocar a Assembleia Geral Ordinária, quando o síndico retardar sua convocação além do prazo legal ou estatutário, e a Assembleia Extraordinária, sempre que ocorrerem motivos graves ou urgentes que justifiquem a deliberação condômina;</div>
+                <div class="inciso"><strong>VI –</strong> Analisar mensalmente os balancetes, demonstrações financeiras, extratos bancários, relatórios de inadimplência e demais demonstrações contábeis elaboradas pelo síndico ou pela administradora, emitindo parecer e recomendações no prazo de até <strong>10 (dez) dias úteis</strong> após o recebimento da documentação.</div>
+            </div>
+        </div>
+
+        <!-- CAPÍTULO III -->
+        <div class="capitulo">
+            <h2 class="capitulo-title"><i class="fas fa-cogs"></i> CAPÍTULO III – FUNCIONAMENTO INTERNO E PROCEDIMENTOS</h2>
+            
+            <div class="artigo">
+                <div class="artigo-numero">Art. 6º</div>
+                <div class="artigo-texto">
+                    As deliberações do Conselho Fiscal serão tomadas por <strong>maioria simples</strong> dos membros presentes, exigido quórum mínimo de <strong>2/3 (dois terços)</strong> dos conselheiros para instalação válida das reuniões.
+                </div>
+            </div>
+
+            <div class="artigo">
+                <div class="artigo-numero">Art. 7º</div>
+                <div class="artigo-texto">
+                    O Conselho terá <strong>acesso irrestrito e imediato</strong> a livros contábeis, notas fiscais, contratos, extratos bancários, sistemas de gestão condominial, correspondências oficiais e quaisquer documentos necessários ao exercício de suas atribuições. A obstrução injustificada pelo síndico ou administradora configurará infração grave, sujeita a representação assemblear e responsabilidade civil.
+                </div>
+            </div>
+
+            <div class="artigo">
+                <div class="artigo-numero">Art. 8º</div>
+                <div class="artigo-texto">
+                    Os membros do Conselho estão obrigados ao <strong>sigilo profissional</strong> sobre informações sensíveis ou estratégicas, sob pena de responsabilização ética, civil e, quando couber, penal, ressalvados os dados estritamente necessários à elaboração de pareceres ou à comunicação à Assembleia, ao Ministério Público ou ao Poder Judiciário.
+                </div>
+            </div>
+
+            <div class="artigo">
+                <div class="artigo-numero">Art. 9º</div>
+                <div class="artigo-texto">
+                    Os conselheiros responderão <strong>solidariamente</strong> por omissão dolosa ou culposa na fiscalização, podendo ser destituídos por Assembleia Geral especificamente convocada para este fim, assegurado o contraditório e a ampla defesa.
+                </div>
+            </div>
+
+            <div class="artigo">
+                <div class="artigo-numero">Art. 10</div>
+                <div class="artigo-texto">
+                    As reuniões serão <strong>ordinárias (mensais)</strong> ou <strong>extraordinárias</strong>, convocadas pelo Presidente ou por qualquer membro, com pauta prévia divulgada aos demais conselheiros e ao síndico com antecedência mínima de <strong>48 horas</strong>. As deliberações serão registradas em ata própria, física ou digital, assinada pelos presentes.
+                </div>
+            </div>
+        </div>
+
+        <!-- CAPÍTULO IV -->
+        <div class="capitulo">
+            <h2 class="capitulo-title"><i class="fas fa-flag-checkered"></i> CAPÍTULO IV – DISPOSIÇÕES FINAIS</h2>
+            
+            <div class="artigo">
+                <div class="artigo-numero">Art. 11</div>
+                <div class="artigo-texto">
+                    Este regulamento entra em vigor na data de sua aprovação pela Assembleia Geral, passando a integrar a <strong>Convenção do Condomínio</strong> como norma complementar.
+                </div>
+            </div>
+
+            <div class="artigo">
+                <div class="artigo-numero">Art. 12</div>
+                <div class="artigo-texto">
+                    Os casos omissos serão resolvidos pela Assembleia Geral, observados o Código Civil, a Lei nº 4.591/1964 e, subsidiariamente, os princípios de fiscalização e governança da Lei 6.404/1976, no que forem compatíveis com a natureza condominial.
+                </div>
+            </div>
+
+            <div class="artigo">
+                <div class="artigo-numero">Art. 13</div>
+                <div class="artigo-texto">
+                    Fica expressamente ressalvado que este regulamento <strong>não confere ao Conselho Fiscal atribuições executivas ou administrativas</strong>, limitando-se às funções de fiscalização, emissão de pareceres e proteção preventiva do patrimônio condominial.
+                </div>
+            </div>
+        </div>
+
+        <!-- Nota de Rodapé -->
+        <div class="footer-note">
+            <i class="fas fa-info-circle"></i>
+            <strong>Observação:</strong> Este modelo deve ser adaptado à realidade de cada condomínio e aprovado em Assembleia Geral, com quórum qualificado de 2/3 das frações ideais, nos termos do art. 1.351 do Código Civil, para integrar a Convenção de Condomínio.
+        </div>
+
+    </div>
+
+    <!-- Barra de Ações Inferior -->
+    <div class="action-bar">
+        <a href="index.html" class="btn btn-outline">
+            <i class="fas fa-home"></i> Voltar para Início
+        </a>
+        <button class="btn btn-primary" onclick="window.print()">
+            <i class="fas fa-download"></i> Baixar PDF
+        </button>
+    </div>
+
+</div>
+
+<footer>
+    <p>
+        <i class="fas fa-book"></i> Conselho Fiscal: Com Domínio das Contas<br>
+        Autor: <strong>José Erigutemberg Meneses de Lima</strong><br>
+        Blumenau, 2026
+    </p>
+    <p style="margin-top:0.5rem;">
+        <a href="index.html"><i class="fas fa-arrow-left"></i> Voltar para a página inicial</a>
+    </p>
+</footer>
+
+<script>
+    // Substituir [NOME] pelo nome do condomínio ao carregar (opcional)
+    document.addEventListener('DOMContentLoaded', function() {
+        // Se houver parâmetro na URL, usar como nome do condomínio
+        const urlParams = new URLSearchParams(window.location.search);
+        const nomeCondominio = urlParams.get('condominio');
+        
+        if (nomeCondominio) {
+            document.querySelectorAll('[NOME]').forEach(el => {
+                el.textContent = el.textContent.replace('[NOME]', nomeCondominio);
+            });
+            document.title = `Regulamento do Conselho Fiscal | ${nomeCondominio}`;
+        }
+    });
+</script>
+
+</body>
+</html>
