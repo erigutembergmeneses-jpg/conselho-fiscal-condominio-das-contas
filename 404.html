@@ -1,0 +1,147 @@
+<!-- 404.html - Versão integrada com o tema do livro -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página não encontrada - Conselho Fiscal: Com Domínio das Contas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0b2b3b 0%, #123e52 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 1rem;
+        }
+
+        .error-container {
+            text-align: center;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            color: #f5a623;
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1;
+        }
+
+        .error-icon {
+            font-size: 4rem;
+            color: #f5a623;
+            margin-bottom: 1rem;
+        }
+
+        .error-message {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            font-weight: 600;
+        }
+
+        .error-description {
+            color: #d0e4f0;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 12px 28px;
+            background: #f5a623;
+            color: #0b2b3b;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+
+        .home-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 166, 35, 0.4);
+            background: #ffb84d;
+        }
+
+        .suggestions {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+        }
+
+        .suggestions a {
+            color: #f5a623;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        .suggestions a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .error-code { font-size: 5rem; }
+            .error-message { font-size: 1.2rem; }
+            .error-container { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">
+            <i class="fas fa-qrcode"></i>
+        </div>
+        <div class="error-code">404</div>
+        <div class="error-message">
+            <i class="fas fa-exclamation-triangle"></i> Página não encontrada
+        </div>
+        <div class="error-description">
+            Ops! O recurso que você procura pode ter sido movido,<br>
+            o QR Code pode estar desatualizado ou a página não existe mais.
+        </div>
+        <a href="/" class="home-link">
+            <i class="fas fa-home"></i> Voltar para o início
+        </a>
+        <div class="suggestions">
+            <i class="fas fa-lightbulb"></i> Sugestões:
+            <a href="/#capa"><i class="fas fa-book"></i> Capa</a> •
+            <a href="/#capitulo4"><i class="fas fa-gavel"></i> Capítulo 4</a> •
+            <a href="/#capitulo5"><i class="fas fa-chart-pie"></i> Capítulo 5</a> •
+            <a href="/#anexos"><i class="fas fa-paperclip"></i> Anexos</a>
+        </div>
+    </div>
+
+    <script>
+        // Adiciona analytics para páginas não encontradas
+        if (typeof gtag !== 'undefined') {
+            gtag('event', '404_error', {
+                'event_category': 'error',
+                'event_label': window.location.pathname
+            });
+        }
+        console.log('📍 Página 404 acessada:', window.location.pathname);
+    </script>
+</body>
+</html>
