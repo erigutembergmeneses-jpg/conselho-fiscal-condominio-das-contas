@@ -339,22 +339,82 @@
         </div>
     </div>
 
-    <!-- CAPÍTULO 4 (Conselho Fiscal) - COM CALCULADORA INTEGRADA -->
-    <!-- Card com duas ações: ler online ou baixar .docx -->
-<div class="qr-card" data-resource="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/regulamento-conselho.html" data-desc="Regulamento do Conselho Fiscal">
-    <div class="card-header"><h3><i class="fas fa-file-contract"></i> Regulamento do Conselho</h3></div>
-    <div class="card-body">
-        <div class="qr-placeholder" id="qr-cap4-1"></div>
-        <div class="resource-desc">📄 Web interativa + .docx editável</div>
-        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-            <a href="regulamento-conselho.html" class="btn-link" target="_blank" style="flex:1; justify-content:center;">
-                <i class="fas fa-eye"></i> Ler online
-            </a>
-            <a href="https://erigutembergmeneses.com.br/modelos/regimento-conselho.docx" class="btn-link" target="_blank" style="flex:1; justify-content:center; background:#eef4f8;">
-                <i class="fas fa-download"></i> Baixar .docx
+   <!-- CAPÍTULO 4 (Conselho Fiscal) - COM CALCULADORA INTEGRADA -->
+<div class="section-title"><i class="fas fa-gavel"></i> CAPÍTULO 4 – Conselho Fiscal</div>
+<div class="qr-grid">
+    
+    <!-- CARD 1: REGULAMENTO DO CONSELHO (COM DUPLA OPÇÃO) -->
+    <div class="qr-card" 
+         data-resource="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/regulamento-conselho.html" 
+         data-desc="Regulamento do Conselho Fiscal">
+        <div class="card-header">
+            <h3><i class="fas fa-file-contract"></i> Regulamento do Conselho</h3>
+        </div>
+        <div class="card-body">
+            <div class="qr-placeholder" id="qr-cap4-1"></div>
+            <div class="resource-desc">📄 Web interativa + .docx editável</div>
+            
+            <!-- Botões duplos: Ler online + Baixar .docx -->
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.5rem;">
+                <a href="regulamento-conselho.html" 
+                   class="btn-link" 
+                   target="_blank" 
+                   style="flex:1; justify-content:center; min-width:120px;"
+                   title="Abrir regulamento em nova aba">
+                    <i class="fas fa-eye"></i> Ler online
+                </a>
+                <a href="https://erigutembergmeneses.com.br/modelos/regimento-conselho.docx" 
+                   class="btn-link" 
+                   target="_blank" 
+                   style="flex:1; justify-content:center; min-width:120px; background:#eef4f8; border-color:#b8cfdd;"
+                   title="Baixar modelo editável em Word"
+                   download>
+                    <i class="fas fa-download"></i> Baixar .docx
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CARD 2: CALCULADORA DE QUÓRUMS (MODAL INTEGRADO) -->
+    <div class="qr-card" 
+         data-resource="#calculadora-modal" 
+         data-desc="Calculadora de quóruns assembleares">
+        <div class="card-header">
+            <h3><i class="fas fa-calculator"></i> Calculadora de Quóruns</h3>
+        </div>
+        <div class="card-body">
+            <div class="qr-placeholder" id="qr-cap4-2"></div>
+            <div class="resource-desc">🧮 Assembleias & quóruns</div>
+            
+            <!-- Botão que abre a calculadora em modal -->
+            <button class="btn-link" 
+                    onclick="openCalculator()" 
+                    style="width:100%; justify-content:center; cursor:pointer;"
+                    title="Abrir calculadora de quóruns">
+                <i class="fas fa-chart-simple"></i> Calcular agora
+            </button>
+        </div>
+    </div>
+    
+    <!-- CARD 3: SIMULADOR DE RESPONSABILIDADE CIVIL -->
+    <div class="qr-card" 
+         data-resource="https://erigutembergmeneses.com.br/simuladores/responsabilidade" 
+         data-desc="Simulador de responsabilidade civil">
+        <div class="card-header">
+            <h3><i class="fas fa-balance-scale"></i> Responsabilidade Civil</h3>
+        </div>
+        <div class="card-body">
+            <div class="qr-placeholder" id="qr-cap4-3"></div>
+            <div class="resource-desc">⚖️ Simulador de riscos</div>
+            <a href="#" 
+               class="btn-link" 
+               onclick="openFallback('https://erigutembergmeneses.com.br/simuladores/responsabilidade', 'Simulador de responsabilidade')"
+               target="_blank">
+                <i class="fas fa-chart-line"></i> Simular
             </a>
         </div>
     </div>
+    
 </div>
 </div>        
         <!-- CARD DA CALCULADORA COM BOTÃO FUNCIONAL -->
