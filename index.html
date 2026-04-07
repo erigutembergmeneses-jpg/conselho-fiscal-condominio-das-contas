@@ -57,16 +57,24 @@
             font-family: 'Poppins', sans-serif;
             font-size: 1.7rem;
             font-weight: 600;
-            margin: 2rem 0 1.2rem 0;
+            margin: 2.5rem 0 1.5rem 0;
             border-left: 6px solid #f5a623;
             padding-left: 1rem;
             color: #0f2e3f;
+            background: linear-gradient(90deg, #f8fafc 0%, transparent 100%);
+            border-radius: 0 12px 12px 0;
         }
         .section-title i { color: #f5a623; margin-right: 0.6rem; }
+        .section-title small {
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: #5a7e94;
+            margin-left: 0.8rem;
+        }
 
         .qr-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 1.8rem;
             margin-bottom: 2rem;
         }
@@ -86,7 +94,7 @@
             box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
         }
         .card-header {
-            background: #eef4f8;
+            background: linear-gradient(135deg, #eef4f8 0%, #e8f0f5 100%);
             padding: 1rem 1.2rem;
             border-bottom: 1px solid #dce6ec;
         }
@@ -149,7 +157,7 @@
         }
         .btn-link i { font-size: 0.9rem; }
         .resource-desc {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #2c5a74;
             font-weight: 500;
             background: #f9fbfd;
@@ -159,6 +167,17 @@
             width: fit-content;
         }
         hr { margin: 0.5rem 0; border-color: #e2edf2; }
+
+        /* Badge de nova seção */
+        .badge-new {
+            background: #f5a62320;
+            color: #c47d0a;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            font-weight: 500;
+        }
 
         /* Modal da Calculadora */
         .modal {
@@ -310,8 +329,14 @@
 </div>
 
 <div class="container">
-    <!-- CAPA E CONTRACAPA -->
-    <div class="section-title"><i class="fas fa-book-open"></i> CAPA & CONTRACAPA</div>
+    
+    <!-- ============================================ -->
+    <!-- SEÇÃO 1: APRESENTAÇÃO E SUPORTE (antiga Capa) -->
+    <!-- ============================================ -->
+    <div class="section-title">
+        <i class="fas fa-flag-checkered"></i> APRESENTAÇÃO & PRIMEIROS PASSOS
+        <small>Conheça o projeto e tire dúvidas</small>
+    </div>
     <div class="qr-grid">
         <div class="qr-card" data-resource="https://erigutembergmeneses.com.br/apresentacao" data-desc="Site do autor com vídeo de apresentação">
             <div class="card-header"><h3><i class="fas fa-video"></i> Vídeo de apresentação</h3></div>
@@ -329,151 +354,109 @@
                 <a href="#" class="btn-link" onclick="openFallback('https://erigutembergmeneses.com.br/checklist-demo', 'Checklist demo')"><i class="fas fa-arrow-right"></i> Testar demo</a>
             </div>
         </div>
-       <div class="qr-card" data-resource="duvidas-tecnicas.html" data-desc="Canal para dúvidas técnicas">
-    <div class="card-header">
-        <h3><i class="fas fa-headset"></i> Dúvidas técnicas</h3>
-    </div>
-    <div class="card-body">
-        <div class="qr-placeholder" id="qr-capa3"></div>
-        <div class="resource-desc"><i class="fas fa-envelope"></i> Suporte especializado</div>
-        <a href="duvidas-tecnicas.html" class="btn-link" target="_blank">
-            <i class="fas fa-comment"></i> Tirar dúvida
-        </a>
-    </div>
-</div>
-
-    </div>
-
-   <!-- CAPÍTULO 4 (Conselho Fiscal) - COM CALCULADORA INTEGRADA -->
-<div class="section-title"><i class="fas fa-gavel"></i> CAPÍTULO 4 – Conselho Fiscal</div>
-<div class="qr-grid">
-    
-    <!-- CARD 1: REGULAMENTO DO CONSELHO (COM DUPLA OPÇÃO) -->
-    <div class="qr-card" 
-         data-resource="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/regulamento-conselho.html" 
-         data-desc="Regulamento do Conselho Fiscal">
-        <div class="card-header">
-            <h3><i class="fas fa-file-contract"></i> Regulamento do Conselho</h3>
-        </div>
-        <div class="card-body">
-            <div class="qr-placeholder" id="qr-cap4-1"></div>
-            <div class="resource-desc">📄 Web interativa + .docx editável</div>
-            
-            <!-- Botões duplos: Ler online + Baixar .docx -->
-            <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.5rem;">
-                <a href="regulamento-conselho.html" 
-                   class="btn-link" 
-                   target="_blank" 
-                   style="flex:1; justify-content:center; min-width:120px;"
-                   title="Abrir regulamento em nova aba">
-                    <i class="fas fa-eye"></i> Ler online
-                </a>
-                <a href="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/regulamento-conselho.docx.doc"        
-                                       class="btn-link" 
-                   target="_blank" 
-                   style="flex:1; justify-content:center; min-width:120px; background:#eef4f8; border-color:#b8cfdd;"
-                   title="Baixar modelo editável em Word"
-                   download>
-                    <i class="fas fa-download"></i> Baixar .docx
+        <div class="qr-card" data-resource="duvidas-tecnicas.html" data-desc="Canal para dúvidas técnicas">
+            <div class="card-header">
+                <h3><i class="fas fa-headset"></i> Dúvidas técnicas</h3>
+            </div>
+            <div class="card-body">
+                <div class="qr-placeholder" id="qr-capa3"></div>
+                <div class="resource-desc"><i class="fas fa-envelope"></i> Suporte especializado</div>
+                <a href="duvidas-tecnicas.html" class="btn-link" target="_blank">
+                    <i class="fas fa-comment"></i> Tirar dúvida
                 </a>
             </div>
         </div>
     </div>
-    
-    <!-- CARD 2: CALCULADORA DE QUÓRUMS (MODAL INTEGRADO) -->
-    <div class="qr-card" 
-         data-resource="#calculadora-modal" 
-         data-desc="Calculadora de quóruns assembleares">
-        <div class="card-header">
-            <h3><i class="fas fa-calculator"></i> Calculadora de Quóruns</h3>
+
+    <!-- ============================================ -->
+    <!-- SEÇÃO 2: BASE LEGAL E FISCALIZAÇÃO (antigo Capítulo 4) -->
+    <!-- ============================================ -->
+    <div class="section-title">
+        <i class="fas fa-gavel"></i> BASE LEGAL & FISCALIZAÇÃO
+        <small>Regulamento • Quóruns • Responsabilidade civil</small>
+    </div>
+    <div class="qr-grid">
+        
+        <!-- CARD: REGULAMENTO DO CONSELHO -->
+        <div class="qr-card" 
+             data-resource="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/regulamento-conselho.html" 
+             data-desc="Regulamento do Conselho Fiscal">
+            <div class="card-header">
+                <h3><i class="fas fa-file-contract"></i> Regulamento do Conselho</h3>
+            </div>
+            <div class="card-body">
+                <div class="qr-placeholder" id="qr-cap4-1"></div>
+                <div class="resource-desc">📄 Web interativa + .docx editável</div>
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.5rem;">
+                    <a href="regulamento-conselho.html" class="btn-link" target="_blank" style="flex:1; justify-content:center; min-width:120px;">
+                        <i class="fas fa-eye"></i> Ler online
+                    </a>
+                    <a href="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/regulamento-conselho.docx.doc" class="btn-link" target="_blank" style="flex:1; justify-content:center; min-width:120px; background:#eef4f8;" download>
+                        <i class="fas fa-download"></i> Baixar .docx
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <div class="qr-placeholder" id="qr-cap4-2"></div>
-            <div class="resource-desc">🧮 Assembleias & quóruns</div>
-            
-            <!-- Botão que abre a calculadora em modal -->
-            <button class="btn-link" 
-                    onclick="openCalculator()" 
-                    style="width:100%; justify-content:center; cursor:pointer;"
-                    title="Abrir calculadora de quóruns">
-                <i class="fas fa-chart-simple"></i> Calcular agora
-            </button>
-        </div>
-    </div>
-        <!-- CARD 3: SIMULADOR DE RESPONSABILIDADE CIVIL -->
-<div class="qr-card" 
-     data-resource="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/simulador-rc.html" 
-     data-desc="Simulador de responsabilidade civil">
-    <div class="card-header">
-        <h3><i class="fas fa-balance-scale"></i> Responsabilidade Civil</h3>
-    </div>
-    <div class="card-body">
-        <div class="qr-placeholder" id="qr-cap4-3"></div>
-        <div class="resource-desc">⚖️ Simulador de riscos</div>
-        <a href="simulador-rc.html" 
-           class="btn-link" 
-           onclick="openFallback('https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/simulador-rc.html', 'Simulador de responsabilidade')"
-           target="_blank">
-            <i class="fas fa-chart-line"></i> Simular
-        </a>
-    </div>
-</div>
-         
-        <!-- CARD DA CALCULADORA COM BOTÃO FUNCIONAL -->
+        
+        <!-- CARD: CALCULADORA DE QUÓRUNS -->
         <div class="qr-card" data-resource="#calculadora-modal" data-desc="Calculadora de quóruns assembleares">
-            <div class="card-header"><h3><i class="fas fa-calculator"></i> Calculadora de Quóruns</h3></div>
+            <div class="card-header">
+                <h3><i class="fas fa-calculator"></i> Calculadora de Quóruns</h3>
+            </div>
             <div class="card-body">
                 <div class="qr-placeholder" id="qr-cap4-2"></div>
-                <div class="resource-desc">🧮 Assembleias & quóruns</div>
-                <!-- Botão que abre a calculadora integrada -->
-                <button class="btn-link" onclick="openCalculator()" style="width:100%; justify-content:center;">
+                <div class="resource-desc">🧮 Assembleias & quóruns legais</div>
+                <button class="btn-link" onclick="openCalculator()" style="width:100%; justify-content:center; cursor:pointer;">
                     <i class="fas fa-chart-simple"></i> Calcular agora
                 </button>
             </div>
         </div>
         
-        <div class="qr-card" data-resource="https://erigutembergmeneses.com.br/simuladores/responsabilidade" data-desc="Simulador de responsabilidade civil">
-            <div class="card-header"><h3><i class="fas fa-balance-scale"></i> Responsabilidade Civil</h3></div>
+        <!-- CARD: SIMULADOR DE RESPONSABILIDADE CIVIL -->
+        <div class="qr-card" 
+             data-resource="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/simulador-rc.html" 
+             data-desc="Simulador de responsabilidade civil">
+            <div class="card-header">
+                <h3><i class="fas fa-balance-scale"></i> Responsabilidade Civil</h3>
+            </div>
             <div class="card-body">
                 <div class="qr-placeholder" id="qr-cap4-3"></div>
                 <div class="resource-desc">⚖️ Simulador de riscos</div>
-                <a href="#" class="btn-link" onclick="openFallback('https://erigutembergmeneses.com.br/simuladores/responsabilidade', 'Simulador de responsabilidade')"><i class="fas fa-chart-line"></i> Simular</a>
+                <a href="simulador-rc.html" class="btn-link" target="_blank">
+                    <i class="fas fa-chart-line"></i> Simular
+                </a>
             </div>
         </div>
     </div>
-<!-- Em algum lugar da sua home page -->
-<a href="simulador-rc.html" class="btn-simulador">
-    ⚖️ Simulador de Risco - Responsabilidade Civil
-</a>
-    <!-- CAPÍTULO 5 (Prestação de Contas) -->
-    <div class="section-title"><i class="fas fa-chart-pie"></i> CAPÍTULO 5 – Prestação de Contas</div>
+
+    <!-- ============================================ -->
+    <!-- SEÇÃO 3: PRESTAÇÃO DE CONTAS & TRANSPARÊNCIA (antigo Capítulo 5) -->
+    <!-- ============================================ -->
+    <div class="section-title">
+        <i class="fas fa-chart-pie"></i> PRESTAÇÃO DE CONTAS & TRANSPARÊNCIA
+        <small>Conciliação • Balancetes • Auditoria</small>
+    </div>
     <div class="qr-grid">
-       <div class="qr-card" data-resource="conciliacao-bancaria.html" data-desc="Página explicativa e planilha de conciliação bancária">
-    <div class="card-header">
-        <h3><i class="fas fa-file-excel"></i> Conciliação bancária</h3>
-    </div>
-    <div class="card-body">
-        <div class="qr-placeholder" id="qr-cap5-1"></div>
-        <div class="resource-desc">📊 Página explicativa e planilha Excel automatizada</div>
-        <a href="conciliacao-bancaria.html" class="btn-link">
-            <i class="fas fa-download"></i> Acessar página
-        </a>
-    </div>
-</div>
-
+        <div class="qr-card" data-resource="conciliacao-bancaria.html" data-desc="Página explicativa e planilha de conciliação bancária">
+            <div class="card-header">
+                <h3><i class="fas fa-file-excel"></i> Conciliação bancária</h3>
+            </div>
+            <div class="card-body">
+                <div class="qr-placeholder" id="qr-cap5-1"></div>
+                <div class="resource-desc">📊 Página explicativa e planilha Excel automatizada</div>
+                <a href="conciliacao-bancaria.html" class="btn-link"><i class="fas fa-download"></i> Acessar página</a>
+            </div>
         </div>
-        <div class="qr-card" data-resource="https://www.youtube.com/watch?v=i6GtUbQKowA&t=68s" data-desc="Tutorial em vídeo: 'Como ler um balancete' (vídeo de terceiro, colhido do Sindiconet)">
-    <div class="card-header"><h3><i class="fas fa-play-circle"></i> Vídeo: Como ler balancete</h3></div>
-    <div class="card-body">
-        <div class="qr-placeholder" id="qr-cap5-2"></div>
-        <div class="resource-desc">📺 Tutorial prático — vídeo de terceiro, colhido do Sindiconet</div>
-        <a href="https://www.youtube.com/watch?v=i6GtUbQKowA&t=68s" class="btn-link" target="_blank">
-            <i class="fas fa-video"></i> Assistir vídeo
-        </a>
-    </div>
-</div>
 
+        <div class="qr-card" data-resource="https://www.youtube.com/watch?v=i6GtUbQKowA&t=68s" data-desc="Tutorial em vídeo: 'Como ler um balancete'">
+            <div class="card-header"><h3><i class="fas fa-play-circle"></i> Vídeo: Como ler balancete</h3></div>
+            <div class="card-body">
+                <div class="qr-placeholder" id="qr-cap5-2"></div>
+                <div class="resource-desc">📺 Tutorial prático — conteúdo Sindiconet</div>
+                <a href="https://www.youtube.com/watch?v=i6GtUbQKowA&t=68s" class="btn-link" target="_blank"><i class="fas fa-video"></i> Assistir vídeo</a>
+            </div>
         </div>
+
         <div class="qr-card" data-resource="https://erigutembergmeneses.com.br/checklists/auditoria" data-desc="Checklist interativo de auditoria">
             <div class="card-header"><h3><i class="fas fa-check-double"></i> Checklist de auditoria</h3></div>
             <div class="card-body">
@@ -484,8 +467,13 @@
         </div>
     </div>
 
-    <!-- CAPÍTULO 7 (Áreas-Chave) -->
-    <div class="section-title"><i class="fas fa-leaf"></i> CAPÍTULO 7 – Áreas-Chave (ESG, ROI, Riscos)</div>
+    <!-- ============================================ -->
+    <!-- SEÇÃO 4: ESTRATÉGIA & SUSTENTABILIDADE (antigo Capítulo 7) -->
+    <!-- ============================================ -->
+    <div class="section-title">
+        <i class="fas fa-leaf"></i> ESTRATÉGIA & SUSTENTABILIDADE
+        <small>ESG • Eficiência energética • Gestão de riscos</small>
+    </div>
     <div class="qr-grid">
         <div class="qr-card" data-resource="https://erigutembergmeneses.com.br/esg/dashboard" data-desc="Dashboard ESG para condomínios">
             <div class="card-header"><h3><i class="fas fa-chart-simple"></i> Dashboard ESG</h3></div>
@@ -513,8 +501,13 @@
         </div>
     </div>
 
-    <!-- ANEXOS OPERACIONAIS -->
-    <div class="section-title"><i class="fas fa-paperclip"></i> ANEXOS OPERACIONAIS</div>
+    <!-- ============================================ -->
+    <!-- SEÇÃO 5: COMUNIDADE & FERRAMENTAS (antigos Anexos) -->
+    <!-- ============================================ -->
+    <div class="section-title">
+        <i class="fas fa-users"></i> COMUNIDADE & FERRAMENTAS
+        <small>Modelos • Fórum • Atualizações legislativas</small>
+    </div>
     <div class="qr-grid">
         <div class="qr-card" data-resource="https://erigutembergmeneses.com.br/biblioteca" data-desc="Biblioteca de modelos editáveis (Word/Excel)">
             <div class="card-header"><h3><i class="fas fa-folder-open"></i> Biblioteca de Modelos</h3></div>
@@ -523,46 +516,44 @@
                 <div class="resource-desc">📁 Word, Excel, editáveis</div>
                 <a href="#" class="btn-link" onclick="openFallback('https://erigutembergmeneses.com.br/biblioteca', 'Biblioteca de modelos')"><i class="fas fa-database"></i> Ver biblioteca</a>
             </div>
-       <div class="qr-card" data-resource="https://conviver.sindiconet.com.br/perguntas" data-desc="Fórum Conviver - As melhores respostas para dúvidas sobre moradia e gestão condominial">
-    <div class="card-header">
-        <h3><i class="fas fa-comments"></i> 🗣️ Fórum de Experiências</h3>
-    </div>
-    <div class="card-body">
-        <div class="qr-placeholder" id="qr-anexo2">
-            <i class="fas fa-users" style="font-size: 2rem; color: #1c5a6a; opacity: 0.6;"></i>
-            <span style="font-size: 0.7rem;">+65 mil participantes</span>
         </div>
-        <div class="resource-desc">
-            💬 Troca de experiências entre condôminos • Tire dúvidas • Compartilhe soluções reais • Aprenda com outros conselhos fiscais
+
+        <div class="qr-card" data-resource="https://conviver.sindiconet.com.br/perguntas" data-desc="Fórum Conviver - As melhores respostas para dúvidas sobre moradia e gestão condominial">
+            <div class="card-header">
+                <h3><i class="fas fa-comments"></i> 🗣️ Fórum de Experiências</h3>
+            </div>
+            <div class="card-body">
+                <div class="qr-placeholder" id="qr-anexo2">
+                    <i class="fas fa-users" style="font-size: 2rem; color: #1c5a6a; opacity: 0.6;"></i>
+                    <span style="font-size: 0.7rem;">+65 mil participantes</span>
+                </div>
+                <div class="resource-desc">
+                    💬 Troca de experiências entre condôminos • Tire dúvidas • Compartilhe soluções reais
+                </div>
+                <a href="https://conviver.sindiconet.com.br/perguntas" class="btn-link" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-users"></i> Acessar fórum SíndicoNet
+                </a>
+            </div>
         </div>
-        <a href="https://conviver.sindiconet.com.br/perguntas" class="btn-link" target="_blank" rel="noopener noreferrer">
-            <i class="fas fa-users"></i> Acessar fórum SíndicoNet
-        </a>
-    </div>
-</div>
-    </div>
-</div>
-        </div>
-        </div>
-        <div class="qr-card" data-resource="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/atualizacoes-legislativas-conselho-fiscal.html" data-desc="Atualizações legislativas do Conselho Fiscal - Guia completo com links oficiais, Reforma Tributária 2026 e funcionamento do conselho">
-    <div class="card-header">
-        <h3><i class="fas fa-gavel"></i> Atualizações legislativas</h3>
-    </div>
-    <div class="card-body">
-        <div class="qr-placeholder" id="qr-anexo3"></div>
-        <div class="resource-desc">
-            📜 Lei em tempo real • Conselho Fiscal • Reforma Tributária 2025/2026
-        </div>
-        <a href="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/atualizacoes-legislativas-conselho-fiscal.html" class="btn-link" target="_blank" rel="noopener noreferrer">
-            <i class="fas fa-newspaper"></i> Acompanhar
-        </a>
-    </div>
-</div>
+
+        <div class="qr-card" data-resource="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/atualizacoes-legislativas-conselho-fiscal.html" data-desc="Atualizações legislativas do Conselho Fiscal">
+            <div class="card-header">
+                <h3><i class="fas fa-gavel"></i> Atualizações legislativas</h3>
+            </div>
+            <div class="card-body">
+                <div class="qr-placeholder" id="qr-anexo3"></div>
+                <div class="resource-desc">
+                    📜 Lei em tempo real • Conselho Fiscal • Reforma Tributária 2025/2026
+                </div>
+                <a href="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/atualizacoes-legislativas-conselho-fiscal.html" class="btn-link" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-newspaper"></i> Acompanhar
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- MODAL DA CALCULADORA DE QUÓRUMS -->
+<!-- MODAL DA CALCULADORA DE QUÓRUNS -->
 <div id="calculadora-modal" class="modal">
     <div class="modal-content">
         <button class="modal-close" onclick="closeCalculator()">&times;</button>
@@ -609,7 +600,7 @@
     Escaneie os códigos pelo celular ou clique nos botões para acessar conteúdo extra, modelos e ferramentas.
     <div class="footer-links">
         <span><i class="fab fa-github"></i> Disponível em: github.com/erigutembergmeneses-jpg</span>
-        <span><i class="fas fa-laptop-code"></i> Versão 1.1 · Calculadora integrada</span>
+        <span><i class="fas fa-laptop-code"></i> Versão 2.0 · Nova organização</span>
     </div>
 </footer>
 
@@ -619,13 +610,12 @@
     // ===============================
     function openCalculator() {
         document.getElementById('calculadora-modal').classList.add('active');
-        document.body.style.overflow = 'hidden'; // evita scroll no fundo
+        document.body.style.overflow = 'hidden';
     }
     
     function closeCalculator() {
         document.getElementById('calculadora-modal').classList.remove('active');
         document.body.style.overflow = '';
-        // Limpa resultado ao fechar
         document.getElementById('resultado').classList.remove('show');
     }
     
@@ -645,8 +635,6 @@
         
         switch(tipo) {
             case 'ordinaria':
-                // Primeira convocação: maioria absoluta dos condôminos (metade + 1)
-                // Segunda convocação: qualquer número
                 const primeiraConvocacao = Math.floor(total / 2) + 1;
                 quorum = Math.min(primeiraConvocacao, presentes);
                 descricao = `${quorum} de ${total} unidades`;
@@ -654,34 +642,29 @@
                 break;
                 
             case 'extraordinaria-2-3':
-                // Obras úteis: 2/3 dos condôminos
                 quorum = Math.ceil(total * 2 / 3);
                 descricao = `${quorum} de ${total} unidades`;
                 nota = `Obra Útil / Reforma: exige aprovação de 2/3 (dois terços) de todos os condôminos, conforme Art. 1.341, §1º do CC.`;
                 break;
                 
             case 'extraordinaria-metade':
-                // Obras necessárias: maioria absoluta
                 quorum = Math.floor(total / 2) + 1;
                 descricao = `${quorum} de ${total} unidades`;
                 nota = `Obra Necessária (conservação urgente): exige maioria absoluta dos condôminos (Art. 1.341, caput, CC).`;
                 break;
                 
             case 'unanimidade':
-                // Mudança de destinação: unanimidade
                 quorum = total;
                 descricao = `${total} de ${total} unidades`;
                 nota = `Mudança de destinação de área comum: exige unanimidade de todos os condôminos (Art. 1.351, CC).`;
                 break;
         }
         
-        // Exibe resultado
         document.getElementById('valorResultado').textContent = descricao;
         document.getElementById('notaResultado').textContent = nota;
         document.getElementById('resultado').classList.add('show');
     }
     
-    // Fecha modal ao clicar fora
     window.onclick = function(event) {
         const modal = document.getElementById('calculadora-modal');
         if (event.target === modal) {
@@ -689,7 +672,6 @@
         }
     }
     
-    // Fecha modal com tecla ESC
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             closeCalculator();
@@ -700,12 +682,9 @@
     // FUNÇÃO DE FALLBACK PARA LINKS
     // ===============================
     function openFallback(url, nomeRecurso) {
-        // Tenta abrir em nova aba
         const novaAba = window.open(url, '_blank');
         
-        // Se falhar (bloqueador de pop-up ou URL inválida), mostra mensagem amigável
         if (!novaAba || novaAba.closed || typeof novaAba.closed === 'undefined') {
-            // Cria um alerta customizado no lugar do alert() padrão
             const msg = document.createElement('div');
             msg.style.cssText = `
                 position: fixed; top: 20px; right: 20px; 
@@ -734,52 +713,33 @@
         
         cards.forEach(card => {
             const resourceUrl = card.getAttribute('data-resource');
-            if (!resourceUrl) return;
+            if (!resourceUrl || resourceUrl === '#calculadora-modal') return;
             
             const qrPlaceholders = card.querySelectorAll('.qr-placeholder');
-            if (qrPlaceholders.length === 1) {
-                const placeholder = qrPlaceholders[0];
-                placeholder.innerHTML = '';
-                
-                const qrDiv = document.createElement('div');
-                qrDiv.classList.add('qr-code-element');
-                placeholder.appendChild(qrDiv);
-                
-                try {
-                    new QRCode(qrDiv, {
-                        text: resourceUrl,
-                        width: 120,
-                        height: 120,
-                        colorDark: "#1a2c3e",
-                        colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.M
-                    });
-                } catch(e) {
-                    qrDiv.innerHTML = `<div style="font-size:11px;text-align:center;color:#666;">
-                        <i class="fas fa-qrcode" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                        QR indisponível<br>
-                        <a href="${resourceUrl}" target="_blank" style="color:#f5a623;text-decoration:none;">🔗 Link direto</a>
-                    </div>`;
-                }
-            }
-        });
-        
-        // Garante que todos os placeholders tenham QR Code ou fallback
-        const allPlaceholders = document.querySelectorAll('.qr-placeholder');
-        allPlaceholders.forEach(ph => {
-            if (ph.innerHTML.trim() === '' && ph.querySelector('.qr-code-element') === null) {
-                const parentCard = ph.closest('.qr-card');
-                if (parentCard) {
-                    const url = parentCard.getAttribute('data-resource');
-                    if (url) {
-                        ph.innerHTML = `<div class="qr-code-element" style="font-size:11px;text-align:center;color:#666;">
+            qrPlaceholders.forEach(placeholder => {
+                if (placeholder.querySelector('.qr-code-element') === null && placeholder.children.length === 0) {
+                    const qrDiv = document.createElement('div');
+                    qrDiv.classList.add('qr-code-element');
+                    placeholder.appendChild(qrDiv);
+                    
+                    try {
+                        new QRCode(qrDiv, {
+                            text: resourceUrl,
+                            width: 120,
+                            height: 120,
+                            colorDark: "#1a2c3e",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.M
+                        });
+                    } catch(e) {
+                        qrDiv.innerHTML = `<div style="font-size:11px;text-align:center;color:#666;">
                             <i class="fas fa-qrcode" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                            Escaneie para acessar<br>
-                            <small style="color:#999;">${url.substring(0,30)}...</small>
+                            QR indisponível<br>
+                            <a href="${resourceUrl}" target="_blank" style="color:#f5a623;text-decoration:none;">🔗 Link direto</a>
                         </div>`;
                     }
                 }
-            }
+            });
         });
     });
 </script>
