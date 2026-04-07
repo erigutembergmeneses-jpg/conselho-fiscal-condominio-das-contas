@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Simulador de Risco - Responsabilidade Civil | Conselho Fiscal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #eef2f7 0%, #d9e0e8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        /* Card principal simulador */
+        .simulator-card {
+            max-width: 1300px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* Header com navegação simulada para home */
+        .sim-header {
+            background: #0b2b3b;
+            padding: 1rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .logo-text {
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: -0.3px;
+        }
+
+        .home-link {
+            background: #ffb347;
+            color: #1e2f3a;
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .home-link:hover {
+            background: #ffa01e;
+            transform: scale(1.02);
+            color: #0b2b3b;
+        }
+
+        /* conteúdo principal */
+        .sim-content {
+            padding: 2rem 2rem 2rem 2rem;
+        }
+
+        .title-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-section h1 {
+            font-size: 1.9rem;
+            color: #0b2b3b;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge-rc {
+            background: #dc2626;
+            color: white;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        .sub {
+            color: #2c5368;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* grid principal */
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* painel de parâmetros */
+        .params-panel {
+            background: #f8fafc;
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2edf2;
+        }
+
+        .params-panel h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            color: #0f3b4f;
+            border-left: 5px solid #ffb347;
+            padding-left: 0.9rem;
+        }
+
+        .param-group {
+            margin-bottom: 1.7rem;
+        }
+
+        .param-group label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            color: #1e4a62;
+            margin-bottom: 0.5rem;
+        }
+
+        .param-group label span:first-child {
+            font-size: 0.95rem;
+        }
+
+        .valor-destaque {
+            background: #e9ecef;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 1.2rem;
+            border: 1.5px solid #cbdde6;
+            background: white;
+            font-size: 1rem;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #ffb347;
+            box-shadow: 0 0 0 3px rgba(255, 180, 71, 0.2);
+        }
+
+        .range-value {
+            display: inline-block;
+            margin-left: 8px;
+            font-weight: 700;
+            color: #c2410c;
+        }
+
+        /* painel de resultados */
+        .result-panel {
+            background: linear-gradient(135deg, #ffffff 0%, #fef9e6 100%);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #ffe6b3;
+        }
+
+        .result-panel h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            color: #0f3b4f;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .risk-meter {
+            background: #eef2f9;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            margin-bottom: 1.8rem;
+            text-align: center;
+        }
+
+        .risk-level {
+            font-size: 1.8rem;
+            font-weight: 800;
+            padding: 0.3rem 0;
+        }
+
+        .risk-bar {
+            background: #ddd;
+            height: 18px;
+            border-radius: 40px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+
+        .risk-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #f39c12, #e74c3c);
+            border-radius: 40px;
+            transition: width 0.35s ease;
+        }
+
+        .prob-value, .impact-value {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .exposure-box {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .exposure-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #e2e8f0;
+            font-size: 0.95rem;
+        }
+
+        .exposure-row:last-child {
+            border: none;
+        }
+
+        .valor-exposicao {
+            font-weight: 800;
+            color: #2c3e66;
+        }
+
+        .recomendacao {
+            background: #eef2ff;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border-left: 6px solid #ffb347;
+        }
+
+        .btn-simular {
+            background: #0b2b3b;
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            width: 100%;
+            border-radius: 3rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-simular:hover {
+            background: #ffb347;
+            color: #0b2b3b;
+            transform: translateY(-2px);
+        }
+
+        .footer-note {
+            margin-top: 1.8rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #5f7f90;
+            border-top: 1px solid #e2edf2;
+            padding-top: 1.2rem;
+        }
+
+        @media (max-width: 850px) {
+            .sim-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .sim-content {
+                padding: 1.5rem;
+            }
+            .title-section h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="simulator-card">
+    <div class="sim-header">
+        <div class="logo-area">
+            <span class="logo-icon">⚖️🧾</span>
+            <span class="logo-text">Conselho Fiscal · Gestão de Riscos</span>
+        </div>
+        <!-- Link para a home page oficial do projeto (github pages) -->
+        <a href="https://erigutembergmeneses-jpg.github.io/conselho-fiscal-condominio-das-contas/" class="home-link" target="_blank">
+            🏠 Acessar Home Page
+        </a>
+    </div>
+    <div class="sim-content">
+        <div class="title-section">
+            <h1>
+                Simulador de Risco Baseado em Responsabilidade Civil
+                <span class="badge-rc">RC Legal</span>
+            </h1>
+            <p class="sub">Avalie exposição a sinistros, danos materiais e falhas na administração condominial / fiscal</p>
+        </div>
+
+        <div class="sim-grid">
+            <!-- painel de entrada de dados -->
+            <div class="params-panel">
+                <h3>📋 Parâmetros de Risco</h3>
+
+                <div class="param-group">
+                    <label><span>📊 Probabilidade de evento de RC (anual)</span><span id="probPercentLabel" class="valor-destaque">25%</span></label>
+                    <input type="range" id="probRange" min="0" max="100" step="1" value="32">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 4px;"><span>Baixa</span><span>Moderada</span><span>Alta</span></div>
+                </div>
+
+                <div class="param-group">
+                    <label>💰 Potencial de Dano Médio (R$)</label>
+                    <input type="number" id="danoInput" value="185000" step="5000">
+                    <div style="font-size: 0.7rem; color:#4a6272;">Valor estimado de indenização + custas judiciais</div>
+                </div>
+
+                <div class="param-group">
+                    <label>🏢 Fatores de Exposição (Multiplicadores)</label>
+                    <select id="fatorGestao">
+                        <option value="0.6">Gestão consolidada + auditoria externa (Redução -40%)</option>
+                        <option value="1.0" selected>Gestão média / controles regulares (Neutro)</option>
+                        <option value="1.5">Falhas documentais / atas incompletas (+50%)</option>
+                        <option value="2.0">Histórico de litígios + ausência de seguro (+100%)</option>
+                    </select>
+                </div>
+
+                <div class="param-group">
+                    <label>🛡️ Cobertura de Seguro RC (Redução de impacto)</label>
+                    <select id="seguroRC">
+                        <option value="0.85">Seguro RC Profissional amplo (redução 15% impacto)</option>
+                        <option value="1.0" selected>Seguro básico / sem apólice específica</option>
+                        <option value="1.25">Sem cobertura ou franquia elevada (+25% severidade)</option>
+                    </select>
+                </div>
+
+                <div class="param-group">
+                    <label>👥 Número de Unidades / Condôminos afetados</label>
+                    <input type="range" id="unidadesRange" min="1" max="300" value="78">
+                    <span id="unidadesValue" style="display: inline-block; margin-top: 5px; font-weight: bold;">78 unidades</span>
+                </div>
+
+                <button id="simulateBtn" class="btn-simular">⚡ Simular Exposição Civil</button>
+            </div>
+
+            <!-- painel de resultados dinâmicos -->
+            <div class="result-panel">
+                <h3>📐 Indicadores de Responsabilidade Civil</h3>
+                <div class="risk-meter">
+                    <div class="risk-level" id="riskLevelText">🔴 Risco Alto</div>
+                    <div class="risk-bar"><div class="risk-fill" id="riskFillBar" style="width: 0%;"></div></div>
+                    <div class="prob-value" id="probFinalDisplay">Probabilidade ajustada: --</div>
+                    <div class="impact-value" id="impactFinalDisplay">Exposição financeira: --</div>
+                </div>
+
+                <div class="exposure-box">
+                    <div class="exposure-row"><strong>📌 Risco Residual (RC)</strong><span id="riskScoreValue" class="valor-exposicao">--</span></div>
+                    <div class="exposure-row">🔄 Perda Esperada Anual (PEA)<span id="expectedLoss" class="valor-exposicao">R$ --</span></div>
+                    <div class="exposure-row">⚖️ Potencial de Dano Máximo Ajustado<span id="maxImpactAdjusted" class="valor-exposicao">R$ --</span></div>
+                    <div class="exposure-row">🏘️ Fator de Exposição Social (unidades)<span id="unidadesImpacto" class="valor-exposicao">--</span></div>
+                </div>
+
+                <div class="recomendacao" id="recomendacaoBox">
+                    <strong>🧠 Recomendação de governança:</strong><br>
+                    <span id="recomendText">Preencha os parâmetros e clique em simular.</span>
+                </div>
+                <div class="footer-note">
+                    * Simulação com base em metodologia quantitativa de risco civil (Probabilidade x Impacto) + ajustes normativos (Lei 4.591/64, Código Civil).
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Elementos do DOM
+        const probRange = document.getElementById('probRange');
+        const probPercentLabel = document.getElementById('probPercentLabel');
+        const danoInput = document.getElementById('danoInput');
+        const fatorGestaoSelect = document.getElementById('fatorGestao');
+        const seguroRCSelect = document.getElementById('seguroRC');
+        const unidadesRange = document.getElementById('unidadesRange');
+        const unidadesValueSpan = document.getElementById('unidadesValue');
+        const simulateBtn = document.getElementById('simulateBtn');
+
+        // Elementos de resultado
+        const riskLevelText = document.getElementById('riskLevelText');
+        const riskFillBar = document.getElementById('riskFillBar');
+        const probFinalDisplay = document.getElementById('probFinalDisplay');
+        const impactFinalDisplay = document.getElementById('impactFinalDisplay');
+        const riskScoreValue = document.getElementById('riskScoreValue');
+        const expectedLossSpan = document.getElementById('expectedLoss');
+        const maxImpactAdjustedSpan = document.getElementById('maxImpactAdjusted');
+        const unidadesImpactoSpan = document.getElementById('unidadesImpacto');
+        const recomendTextSpan = document.getElementById('recomendText');
+
+        // helper formatação BRL
+        function formatMoney(value) {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 }).format(value);
+        }
+
+        // Atualizar label do range de probabilidade
+        function updateProbLabel() {
+            let val = parseInt(probRange.value, 10);
+            probPercentLabel.innerText = val + '%';
+        }
+        probRange.addEventListener('input', function() {
+            updateProbLabel();
+        });
+        updateProbLabel();
+
+        // Atualizar número de unidades
+        function updateUnidadesLabel() {
+            let val = parseInt(unidadesRange.value, 10);
+            unidadesValueSpan.innerText = val + (val === 1 ? ' unidade' : ' unidades');
+        }
+        unidadesRange.addEventListener('input', updateUnidadesLabel);
+        updateUnidadesLabel();
+
+        // Lógica principal de simulação de risco de Responsabilidade Civil
+        function runSimulation() {
+            // 1. Coletar entradas
+            let probBase = parseFloat(probRange.value);      // percentual 0-100
+            let danoBase = parseFloat(danoInput.value);
+            if (isNaN(danoBase) || danoBase < 0) danoBase = 0;
+            let fatorGestao = parseFloat(fatorGestaoSelect.value);
+            let fatorSeguro = parseFloat(seguroRCSelect.value);
+            let numUnidades = parseInt(unidadesRange.value, 10);
+            if (isNaN(numUnidades)) numUnidades = 1;
+
+            // Ajuste: probabilidade sofre influência da gestão (multiplicador de risco)
+            // Quanto pior a gestão (fator >1), maior a chance de materialização do evento.
+            // A probabilidade base é transformada em odds, mas mantemos de forma simples:
+            let probAjustadaPercent = probBase * fatorGestao;
+            // Cap máximo 95% (nunca 100% para evitar certeza absoluta)
+            if (probAjustadaPercent > 95) probAjustadaPercent = 95;
+            if (probAjustadaPercent < 0) probAjustadaPercent = 0;
+
+            // Probabilidade final como decimal
+            let probFinalDecimal = probAjustadaPercent / 100;
+
+            // 2. Impacto Financeiro Base (potencial de dano) ajustado por:
+            //    - fator de seguro (aumenta ou reduz severidade)
+            //    - fator de exposição social: número de unidades influencia o dano agregado (efeito multiplicador modesto)
+            //      modelo: quanto mais unidades, maior o dano potencial por responsabilidade civil coletiva
+            let fatorUnidades = 1 + ( (numUnidades - 1) / 200 );   // ex: 1 unidade = 1, 200 unidades = 1,995 (~2x)
+            if (fatorUnidades > 2.2) fatorUnidades = 2.2; // limite superior
+            
+            let danoAjustado = danoBase * fatorSeguro * fatorUnidades;
+            if (danoAjustado < 0) danoAjustado = 0;
+
+            // 3. Risco Residual (métrica de score) = Probabilidade (%) * (Impacto normalizado até R$1M)
+            let impactoNormalizado = Math.min(danoAjustado / 500000, 2.0); // até R$500k = 1, acima 1M ~2
+            let riskScore = (probAjustadaPercent / 100) * impactoNormalizado * 100; // escala 0-200
+            riskScore = Math.min(riskScore, 100); // limitamos em 100 para exibição visual
+            
+            // 4. Perda Esperada Anual (PEA) = ProbFinal * Dano Ajustado
+            let expectedLossValue = probFinalDecimal * danoAjustado;
+            
+            // 5. Níveis de risco e textos
+            let riskLevel = "";
+            let fillPercent = 0;
+            if (riskScore < 25) {
+                riskLevel = "🟢 Risco Baixo";
+                fillPercent = (riskScore / 100) * 70;
+            } else if (riskScore < 60) {
+                riskLevel = "🟠 Risco Moderado";
+                fillPercent = (riskScore / 100) * 80;
+            } else {
+                riskLevel = "🔴 Risco Alto";
+                fillPercent = (riskScore / 100) * 95;
+            }
+            if (riskScore >= 90) riskLevel = "⛔ Risco Crítico (RC elevada)";
+            
+            // Preencher UI
+            riskLevelText.innerText = riskLevel;
+            riskFillBar.style.width = Math.min(fillPercent, 100) + "%";
+            
+            probFinalDisplay.innerText = `Probabilidade ajustada: ${probAjustadaPercent.toFixed(1)}% (Base: ${probBase}% × Gestão: ${fatorGestao.toFixed(2)})`;
+            impactFinalDisplay.innerText = `Exposição financeira: ${formatMoney(danoAjustado)} (dano potencial)`;
+            
+            riskScoreValue.innerText = riskScore.toFixed(1) + " pts";
+            expectedLossSpan.innerText = formatMoney(expectedLossValue);
+            maxImpactAdjustedSpan.innerText = formatMoney(danoAjustado);
+            unidadesImpactoSpan.innerText = numUnidades + (numUnidades === 1 ? " unidade" : " unidades") + " (multiplicador social: " + fatorUnidades.toFixed(2) + "x)";
+            
+            // Recomendações personalizadas baseadas nos fatores
+            let recomendacao = "";
+            if (probAjustadaPercent > 55) {
+                recomendacao += "⚠️ Probabilidade de sinistro elevada. Recomenda-se revisar processos internos, formalizar atas e implementar checklist de conformidade. ";
+            } else if (probAjustadaPercent > 25) {
+                recomendacao += "📌 Risco moderado de materialização. Invista em treinamento dos gestores e conselheiros fiscais. ";
+            } else {
+                recomendacao += "✅ Nível de risco controlado. Mantenha as boas práticas de governança e documentação. ";
+            }
+            
+            if (fatorGestao > 1.2) {
+                recomendacao += "🔍 Fator de gestão elevado (falhas documentais/ausência de controles). Urge implementar auditoria interna e seguro RC específico. ";
+            }
+            if (fatorSeguro > 1.0) {
+                recomendacao += "🛡️ Sem cobertura adequada de seguro de responsabilidade civil: contrate apólice para administradores e conselheiros fiscais. ";
+            } else if (fatorSeguro < 0.9) {
+                recomendacao += "✔️ Apólice de seguros ativa, mas revise franquias e limites para evitar exposição residual. ";
+            }
+            
+            if (danoAjustado > 300000) {
+                recomendacao += "💰 Exposição financeira superior a R$300k. Avalie provisionamento contábil e reserve fundo de contingência para honorários advocatícios. ";
+            }
+            
+            if (numUnidades > 100 && probAjustadaPercent > 30) {
+                recomendacao += "🏢 Condomínio de grande porte com risco coletivo: considere criação de comitê de riscos e mediação extrajudicial. ";
+            }
+            
+            if (!recomendacao.trim()) {
+                recomendacao = "Mantenha conformidade com o Código Civil e a Lei de Condomínios. Realize simulações periódicas.";
+            }
+            
+            recomendTextSpan.innerHTML = recomendacao;
+        }
+
+        // Evento de clique e também carregar valores iniciais
+        simulateBtn.addEventListener('click', () => {
+            runSimulation();
+        });
+        
+        // Executar uma simulação inicial para exibir dados padrão
+        window.addEventListener('DOMContentLoaded', () => {
+            runSimulation();
+        });
+        
+        // Atualiza também quando inputs relevantes mudarem (opcional - melhora usabilidade)
+        const autoUpdateInputs = [probRange, danoInput, fatorGestaoSelect, seguroRCSelect, unidadesRange];
+        autoUpdateInputs.forEach(input => {
+            input.addEventListener('change', () => runSimulation());
+            if (input.type === 'range' || input.tagName === 'SELECT') {
+                input.addEventListener('input', () => runSimulation());
+            } else {
+                input.addEventListener('input', () => runSimulation());
+            }
+        });
+    })();
+</script>
+</body>
+</html>
