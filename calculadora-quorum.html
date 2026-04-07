@@ -1,357 +1,104 @@
+<!-- Gerador-de-QRCode-Calculadora.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Quóruns - Conselho Fiscal</title>
+    <title>Gerador de QR Code - Calculadora de Quóruns</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0b2b3b 0%, #123e52 100%);
-            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f7fc;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            margin: 0;
             padding: 20px;
         }
-
-        .calculator-container {
-            max-width: 550px;
-            width: 100%;
+        .container {
             background: white;
-            border-radius: 28px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
-        .calculator-container:hover {
-            transform: translateY(-5px);
-        }
-
-        .header {
-            background: #f5a623;
-            padding: 25px 20px;
-            text-align: center;
-            color: #0b2b3b;
-        }
-
-        .header h1 {
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .form-section {
-            padding: 25px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            color: #1a2c3e;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        label i {
-            color: #f5a623;
-            margin-right: 6px;
-        }
-
-        input, select {
+        input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 12px;
             border: 2px solid #e2edf2;
             border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s;
-            font-family: inherit;
+            margin: 15px 0;
+            font-size: 14px;
         }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: #f5a623;
-            box-shadow: 0 0 0 3px rgba(245,166,35,0.2);
+        .qr-output {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9fbfd;
+            border-radius: 16px;
         }
-
-        .help-text {
-            font-size: 0.75rem;
-            color: #7a8f9e;
-            margin-top: 5px;
-        }
-
         button {
-            width: 100%;
-            background: #0b2b3b;
-            color: white;
+            background: #f5a623;
             border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 1rem;
+            padding: 12px 24px;
+            border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
+            width: 100%;
         }
-
-        button:hover {
-            background: #f5a623;
-            color: #0b2b3b;
-            transform: scale(1.02);
-        }
-
-        .results {
-            background: #f4f7fc;
-            padding: 20px;
-            border-radius: 16px;
-            margin-top: 25px;
-            display: none;
-        }
-
-        .results.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #dce6ec;
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-        }
-
-        .result-label {
-            font-weight: 600;
-            color: #1a2c3e;
-        }
-
-        .result-value {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #f5a623;
-        }
-
-        .result-detail {
-            font-size: 0.8rem;
-            color: #7a8f9e;
-            margin-top: 5px;
-        }
-
-        .badge {
-            display: inline-block;
-            background: #e8f0f5;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            color: #1a2c3e;
-        }
-
-        .footer {
-            background: #eef4f8;
-            padding: 15px;
+        .preview {
+            margin-top: 20px;
             text-align: center;
-            font-size: 0.7rem;
-            color: #7a8f9e;
-        }
-
-        @media (max-width: 480px) {
-            .form-section { padding: 20px; }
-            .header h1 { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
-    <div class="calculator-container">
-        <div class="header">
-            <h1><i class="fas fa-calculator"></i> Calculadora de Quóruns</h1>
-            <p>Baseado no Art. 1432º do Código Civil</p>
-        </div>
-
-        <div class="form-section">
-            <div class="input-group">
-                <label><i class="fas fa-building"></i> Total de Permilagens do Condomínio</label>
-                <input type="number" id="totalPermilagem" value="1000" step="1" min="1">
-                <div class="help-text">Normalmente 1000 permilagens = 100% do condomínio</div>
-            </div>
-
-            <div class="input-group">
-                <label><i class="fas fa-users"></i> Permilagem dos Presentes / Representados</label>
-                <input type="number" id="presentesPermilagem" value="0" step="1" min="0" placeholder="Ex: 550">
-                <div class="help-text">Soma das permilagens dos condôminos presentes + procurações</div>
-            </div>
-
-            <div class="input-group">
-                <label><i class="fas fa-tasks"></i> Tipo de Deliberação</label>
-                <select id="tipoDecisao">
-                    <option value="simples">📋 Aprovação de contas / Eleição (maioria simples dos presentes)</option>
-                    <option value="absoluta">🏢 Aprovação do Regimento Interno (maioria absoluta)</option>
-                    <option value="doisTerços">🔧 Obras de inovação (2/3 do valor total)</option>
-                    <option value="unanimidade">✍️ Alteração do título constitutivo / Venda (unanimidade)</option>
-                </select>
-            </div>
-
-            <button onclick="calcularQuorum()">
-                <i class="fas fa-chart-line"></i> Calcular Quórum
-            </button>
-
-            <div id="results" class="results">
-                <div class="result-item">
-                    <span class="result-label">🏛️ Quórum de Instalação (1ª convocatória)</span>
-                    <span class="result-value" id="quorumInstalacao">-</span>
-                </div>
-                <div id="statusInstalacao" class="result-detail"></div>
-
-                <div class="result-item">
-                    <span class="result-label">📊 Permilagem atual dos presentes</span>
-                    <span class="result-value" id="permilagemAtual">-</span>
-                </div>
-
-                <div class="result-item">
-                    <span class="result-label">✅ Quórum Deliberativo necessário</span>
-                    <span class="result-value" id="quorumDeliberativo">-</span>
-                </div>
-                <div id="statusDeliberativo" class="result-detail"></div>
-
-                <div id="mensagemFinal" style="margin-top: 15px; padding: 10px; background: #e8f0f5; border-radius: 12px; text-align: center; font-size: 0.85rem;"></div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <i class="fas fa-gavel"></i> Com base no Código Civil, art. 1432.º | 2ª convocatória: qualquer número de presentes
+    <div class="container">
+        <h1>🔲 Gerador de QR Code</h1>
+        <p>Calculadora de Quóruns - Capítulo 4</p>
+        
+        <label>🌐 URL do seu site no GitHub Pages:</label>
+        <input type="text" id="urlInput" placeholder="https://seu-usuario.github.io/seu-repositorio/calculadora-quorum.html">
+        
+        <div class="qr-output" id="qrContainer"></div>
+        
+        <button onclick="generateQR()">🔄 Gerar QR Code</button>
+        
+        <div class="preview">
+            <small>⬇️ Clique com botão direito no QR Code para salvar a imagem</small>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
-        function calcularQuorum() {
-            const total = parseFloat(document.getElementById('totalPermilagem').value) || 1000;
-            const presentes = parseFloat(document.getElementById('presentesPermilagem').value) || 0;
-            const tipoDecisao = document.getElementById('tipoDecisao').value;
-
-            // Quórum de instalação: mais de metade do total (501 de 1000)
-            const quorumInstalacao = (total / 2) + 0.01;
-            const instalacaoOk = presentes >= quorumInstalacao;
-
-            // Cálculo do quórum deliberativo baseado no tipo
-            let quorumNecessario = 0;
-            let descricao = '';
-            let statusOk = false;
-
-            switch(tipoDecisao) {
-                case 'simples':
-                    // Maioria simples dos presentes (metade + 1 voto)
-                    if (presentes > 0) {
-                        quorumNecessario = (presentes / 2) + 0.01;
-                    } else {
-                        quorumNecessario = 0;
-                    }
-                    descricao = 'Maioria simples dos condôminos presentes na assembleia';
-                    statusOk = presentes >= quorumNecessario && instalacaoOk;
-                    break;
-                case 'absoluta':
-                    // Maioria absoluta = mais da metade do total
-                    quorumNecessario = (total / 2) + 0.01;
-                    descricao = 'Maioria absoluta: mais da metade de TODAS as permilagens do condomínio';
-                    statusOk = presentes >= quorumNecessario && instalacaoOk;
-                    break;
-                case 'doisTercios':
-                    // 2/3 do valor total do prédio
-                    quorumNecessario = (total * 2) / 3;
-                    descricao = 'Dois terços do valor total do condomínio (obras de inovação)';
-                    statusOk = presentes >= quorumNecessario && instalacaoOk;
-                    break;
-                case 'unanimidade':
-                    // Unanimidade = 100% das permilagens
-                    quorumNecessario = total;
-                    descricao = 'Unanimidade: todas as permilagens do condomínio devem votar a favor';
-                    statusOk = presentes >= quorumNecessario && instalacaoOk;
-                    break;
+        function generateQR() {
+            let url = document.getElementById('urlInput').value;
+            if (!url) {
+                url = window.location.href.replace('gerador-qrcode.html', 'calculadora-quorum.html');
             }
-
-            // Arredondar para 2 casas decimais
-            const quorumInstalacaoFormat = quorumInstalacao.toFixed(1);
-            const quorumDeliberativoFormat = quorumNecessario.toFixed(1);
-            const presentesFormat = presentes.toFixed(1);
-
-            // Atualizar DOM
-            document.getElementById('quorumInstalacao').innerHTML = `${quorumInstalacaoFormat} permilagens`;
-            document.getElementById('permilagemAtual').innerHTML = `${presentesFormat} permilagens`;
-            document.getElementById('quorumDeliberativo').innerHTML = `${quorumDeliberativoFormat} permilagens`;
-
-            // Status de instalação
-            const statusInstalacaoDiv = document.getElementById('statusInstalacao');
-            if (instalacaoOk) {
-                statusInstalacaoDiv.innerHTML = '✅ <strong>Quórum de instalação ATINGIDO!</strong> A assembleia pode iniciar.';
-                statusInstalacaoDiv.style.color = '#2e7d32';
-            } else {
-                statusInstalacaoDiv.innerHTML = '❌ <strong>Quórum de instalação NÃO atingido.</strong> Necessário convocar 2ª chamada (qualquer número de presentes delibera).';
-                statusInstalacaoDiv.style.color = '#c62828';
-            }
-
-            // Status deliberativo
-            const statusDeliberativoDiv = document.getElementById('statusDeliberativo');
-            if (instalacaoOk) {
-                if (presentes >= quorumNecessario) {
-                    statusDeliberativoDiv.innerHTML = '✅ <strong>Quórum deliberativo ATINGIDO!</strong> A decisão pode ser aprovada.';
-                    statusDeliberativoDiv.style.color = '#2e7d32';
-                } else {
-                    statusDeliberativoDiv.innerHTML = `⚠️ <strong>Quórum deliberativo NÃO atingido.</strong> Faltam ${(quorumNecessario - presentes).toFixed(1)} permilagens para aprovação.`;
-                    statusDeliberativoDiv.style.color = '#f57c00';
-                }
-            } else {
-                statusDeliberativoDiv.innerHTML = '⏳ Aguardar 2ª convocatória para deliberar.';
-                statusDeliberativoDiv.style.color = '#1565c0';
-            }
-
-            // Mensagem final
-            const mensagemDiv = document.getElementById('mensagemFinal');
-            if (!instalacaoOk) {
-                mensagemDiv.innerHTML = '<i class="fas fa-bell"></i> <strong>2ª Convocatória:</strong> Após 8 dias, a assembleia pode deliberar com qualquer número de presentes (art. 1432.º, n.º 2).';
-                mensagemDiv.style.background = '#fff3e0';
-            } else if (presentes >= quorumNecessario) {
-                mensagemDiv.innerHTML = '<i class="fas fa-check-circle"></i> <strong>Deliberação VÁLIDA!</strong> Todos os quóruns foram atingidos conforme a lei.';
-                mensagemDiv.style.background = '#e8f5e9';
-            } else {
-                mensagemDiv.innerHTML = '<i class="fas fa-chart-simple"></i> A assembleia está instalada, mas ainda faltam votos para aprovar esta deliberação específica.';
-                mensagemDiv.style.background = '#fff8e1';
-            }
-
-            // Mostrar resultados
-            document.getElementById('results').classList.add('show');
+            
+            document.getElementById('qrContainer').innerHTML = '';
+            const qrDiv = document.createElement('div');
+            document.getElementById('qrContainer').appendChild(qrDiv);
+            
+            new QRCode(qrDiv, {
+                text: url,
+                width: 200,
+                height: 200,
+                colorDark: "#0b2b3b",
+                colorLight: "#ffffff"
+            });
+            
+            // Adiciona texto informativo
+            const info = document.createElement('p');
+            info.innerHTML = `<small>🔗 ${url}</small>`;
+            info.style.marginTop = '10px';
+            info.style.wordBreak = 'break-all';
+            document.getElementById('qrContainer').appendChild(info);
         }
-
-        // Calcular automaticamente quando os valores mudarem
-        document.getElementById('totalPermilagem').addEventListener('input', calcularQuorum);
-        document.getElementById('presentesPermilagem').addEventListener('input', calcularQuorum);
-        document.getElementById('tipoDecisao').addEventListener('change', calcularQuorum);
-
-        // Executar cálculo inicial
-        calcularQuorum();
+        
+        generateQR();
     </script>
 </body>
 </html>
