@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Mapa de Riscos | Gestão de Riscos Condominiais</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fef9e6 0%, #fef3c7 100%);
+            color: #1a2c3e;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .hero-risco {
+            background: linear-gradient(135deg, #c62828 0%, #d32f2f 50%, #e53935 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .hero-risco h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-risco h1 i {
+            background: white;
+            color: #d32f2f;
+            padding: 0.5rem;
+            border-radius: 50%;
+            font-size: 1.5rem;
+        }
+
+        .hero-risco p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .badge-risco {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Botão voltar */
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #c62828;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn-voltar:hover {
+            background: #b71c1c;
+        }
+
+        /* Cards de estatísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card.critical i { color: #c62828; }
+        .stat-card.high i { color: #ef6c00; }
+        .stat-card.medium i { color: #ffc107; }
+        .stat-card.low i { color: #4caf50; }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Matriz de Riscos */
+        .matrix-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1a2c3e;
+        }
+
+        .risk-matrix {
+            background: white;
+            border-radius: 1.2rem;
+            overflow-x: auto;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        .matrix-table th, .matrix-table td {
+            border: 1px solid #e0e0e0;
+            padding: 0.8rem;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .matrix-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .matrix-cell {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .matrix-cell:hover {
+            transform: scale(0.98);
+        }
+
+        .critical-bg { background: #ffebee; }
+        .high-bg { background: #fff3e0; }
+        .medium-bg { background: #fff8e1; }
+        .low-bg { background: #e8f5e9; }
+
+        .risk-critical { color: #c62828; font-weight: 700; }
+        .risk-high { color: #ef6c00; font-weight: 600; }
+        .risk-medium { color: #ff8f00; }
+        .risk-low { color: #4caf50; }
+
+        /* Lista de Riscos */
+        .risks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .risk-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .risk-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .risk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .risk-level {
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .level-critical { background: #c62828; color: white; }
+        .level-high { background: #ef6c00; color: white; }
+        .level-medium { background: #ffc107; color: #333; }
+        .level-low { background: #4caf50; color: white; }
+
+        .risk-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #1a2c3e;
+        }
+
+        .risk-desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin: 0.5rem 0;
+        }
+
+        .risk-mitigation {
+            background: #e8f5e9;
+            padding: 0.5rem;
+            border-radius: 0.8rem;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .risk-mitigation i {
+            color: #4caf50;
+            margin-right: 0.3rem;
+        }
+
+        /* Gráfico */
+        .chart-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .chart-card h3 {
+            font-size: 1.2rem;
+            color: #c62828;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 280px;
+        }
+
+        /* Plano de Ação */
+        .action-plan {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: white;
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-plan h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-item {
+            background: rgba(255,255,255,0.1);
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .action-item i {
+            font-size: 1.2rem;
+        }
+
+        /* Modal de Detalhes */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem; right: 1.2rem;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-close:hover { color: #c00; }
+
+        .modal h3 {
+            color: #c62828;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #c62828;
+            color: white;
+            margin-top: 2rem;
+            border-top-left-radius: 2rem;
+            border-top-right-radius: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .hero-risco h1 { font-size: 1.6rem; }
+            .risks-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero-risco">
+    <a href="index.html" class="btn-voltar" style="position: absolute; left: 1.5rem; top: 1.5rem; background: rgba(255,255,255,0.2);">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+    <h1><i class="fas fa-map"></i> Mapa de Riscos</h1>
+    <p>Identifique, avalie e mitigue os riscos do seu condomínio</p>
+    <div class="badge-risco"><i class="fas fa-chart-line"></i> Matriz de Riscos • Gestão Preventiva</div>
+</div>
+
+<div class="container">
+
+    <!-- Cards estatísticos -->
+    <div class="stats-grid">
+        <div class="stat-card critical">
+            <i class="fas fa-skull-crosswalk"></i>
+            <div class="stat-value" id="totalCritical">0</div>
+            <div class="stat-label">Riscos Críticos</div>
+        </div>
+        <div class="stat-card high">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="stat-value" id="totalHigh">0</div>
+            <div class="stat-label">Riscos Altos</div>
+        </div>
+        <div class="stat-card medium">
+            <i class="fas fa-chart-line"></i>
+            <div class="stat-value" id="totalMedium">0</div>
+            <div class="stat-label">Riscos Médios</div>
+        </div>
+        <div class="stat-card low">
+            <i class="fas fa-check-circle"></i>
+            <div class="stat-value" id="totalLow">0</div>
+            <div class="stat-label">Riscos Baixos</div>
+        </div>
+    </div>
+
+    <!-- Matriz de Riscos -->
+    <div class="matrix-title">
+        <i class="fas fa-border-all"></i> Matriz de Probabilidade x Impacto
+    </div>
+    <div class="risk-matrix">
+        <table class="matrix-table">
+            <thead>
+                <tr><th></th><th>Muito Baixo</th><th>Baixo</th><th>Médio</th><th>Alto</th><th>Muito Alto</th></tr>
+            </thead>
+            <tbody>
+                <tr><th>Muito Alto</th><td class="matrix-cell medium-bg">Médio</td><td class="matrix-cell medium-bg">Médio</td><td class="matrix-cell high-bg">Alto</td><td class="matrix-cell critical-bg">Crítico</td><td class="matrix-cell critical-bg">Crítico</td></tr>
+                <tr><th>Alto</th><td class="matrix-cell low-bg">Baixo</td><td class="matrix-cell medium-bg">Médio</td><td class="matrix-cell high-bg">Alto</td><td class="matrix-cell high-bg">Alto</td><td class="matrix-cell critical-bg">Crítico</td></tr>
+                <tr><th>Médio</th><td class="matrix-cell low-bg">Baixo</td><td class="matrix-cell low-bg">Baixo</td><td class="matrix-cell medium-bg">Médio</td><td class="matrix-cell high-bg">Alto</td><td class="matrix-cell high-bg">Alto</td></tr>
+                <tr><th>Baixo</th><td class="matrix-cell low-bg">Baixo</td><td class="matrix-cell low-bg">Baixo</td><td class="matrix-cell low-bg">Baixo</td><td class="matrix-cell medium-bg">Médio</td><td class="matrix-cell medium-bg">Médio</td></tr>
+                <tr><th>Muito Baixo</th><td class="matrix-cell low-bg">Baixo</td><td class="matrix-cell low-bg">Baixo</td><td class="matrix-cell low-bg">Baixo</td><td class="matrix-cell low-bg">Baixo</td><td class="matrix-cell low-bg">Baixo</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Lista de Riscos -->
+    <div class="matrix-title">
+        <i class="fas fa-list"></i> Riscos Identificados no Condomínio
+    </div>
+    <div class="risks-grid" id="risksGrid"></div>
+
+    <!-- Gráfico de Distribuição -->
+    <div class="chart-card">
+        <h3><i class="fas fa-chart-pie"></i> Distribuição dos Riscos por Categoria</h3>
+        <div class="chart-container">
+            <canvas id="riskChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Plano de Ação Prioritário -->
+    <div class="action-plan">
+        <h3><i class="fas fa-clipboard-list"></i> Plano de Ação Prioritário</h3>
+        <div class="action-list">
+            <div class="action-item"><i class="fas fa-fire-extinguisher"></i> Instalar sistema de prevenção contra incêndio</div>
+            <div class="action-item"><i class="fas fa-shield-alt"></i> Contratar seguro abrangente (incêndio, responsabilidade civil)</div>
+            <div class="action-item"><i class="fas fa-charging-station"></i> Revisar instalações elétricas periodicamente</div>
+            <div class="action-item"><i class="fas fa-water"></i> Implementar plano de manutenção de bombas e reservatórios</div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <i class="fas fa-map-marked-alt"></i> Mapa de Riscos - Conselho Fiscal: Com Domínio das Contas<br>
+    Identifique, previna e proteja seu patrimônio
+</footer>
+
+<!-- Modal de Detalhes -->
+<div id="riskModal" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+        <p style="margin-top: 1rem;"><strong><i class="fas fa-tools"></i> Mitigação:</strong></p>
+        <p id="modalMitigation"></p>
+        <p style="margin-top: 1rem;"><strong><i class="fas fa-clock"></i> Prazo sugerido:</strong> <span id="modalDeadline"></span></p>
+    </div>
+</div>
+
+<script>
+    // Base de dados de riscos
+    const riscos = [
+        { id: 1, nome: "Incêndio", descricao: "Risco de incêndio por instalações elétricas antigas ou falta de manutenção", nivel: "critical", categoria: "Segurança", mitigacao: "Instalar sistema de alarme e sprinklers, revisar elétrica anualmente, treinar brigada de incêndio", prazo: "Imediato (30 dias)" },
+        { id: 2, nome: "Inundação / Alagamento", descricao: "Vazamentos em tubulações, bombas subdimensionadas ou falta de manutenção", nivel: "high", categoria: "Infraestrutura", mitigacao: "Manutenção preventiva das bombas, seguro contra alagamento, limpeza de calhas", prazo: "Curto prazo (3 meses)" },
+        { id: 3, nome: "Inadimplência em Massa", descricao: "Aumento da inadimplência comprometendo o fluxo de caixa", nivel: "high", categoria: "Financeiro", mitigacao: "Fundo de reserva robusto, negociação de débitos, ações judiciais seletivas", prazo: "Contínuo" },
+        { id: 4, nome: "Acidentes de Trabalho", descricao: "Funcionários expostos a riscos em áreas comuns ou equipamentos", nivel: "medium", categoria: "Trabalhista", mitigacao: "EPIs adequados, treinamentos regulares, mapa de riscos para funcionários", prazo: "3 meses" },
+        { id: 5, nome: "Fraude / Desvio de Recursos", descricao: "Possibilidade de desvio de verbas do condomínio por má gestão", nivel: "critical", categoria: "Governança", mitigacao: "Conselho fiscal atuante, auditoria independente, prestação de contas transparente", prazo: "Imediato" },
+        { id: 6, nome: "Problemas Estruturais", descricao: "Trincas, infiltrações ou problemas na fundação do edifício", nivel: "high", categoria: "Infraestrutura", mitigacao: "Laudo técnico periódico, reserva para manutenção, seguro predial", prazo: "6 meses" },
+        { id: 7, nome: "Conflitos entre Moradores", descricao: "Desentendimentos, barulho excessivo, falta de convivência harmoniosa", nivel: "medium", categoria: "Social", mitigacao: "Regulamento interno claro, mediação de conflitos, assembleias participativas", prazo: "Contínuo" },
+        { id: 8, nome: "Ciberataque / Dados Vazados", descricao: "Exposição de dados bancários ou pessoais dos condôminos", nivel: "medium", categoria: "Tecnologia", mitigacao: "Software de gestão seguro, backups regulares, política de senhas fortes", prazo: "3 meses" }
+    ];
+
+    // Função para renderizar cards de risco
+    function renderRiscos() {
+        const grid = document.getElementById('risksGrid');
+        let critical = 0, high = 0, medium = 0, low = 0;
+        
+        grid.innerHTML = '';
+        riscos.forEach(risco => {
+            let nivelClass = '', nivelText = '';
+            switch(risco.nivel) {
+                case 'critical': nivelClass = 'level-critical'; nivelText = 'CRÍTICO'; critical++; break;
+                case 'high': nivelClass = 'level-high'; nivelText = 'ALTO'; high++; break;
+                case 'medium': nivelClass = 'level-medium'; nivelText = 'MÉDIO'; medium++; break;
+                default: nivelClass = 'level-low'; nivelText = 'BAIXO'; low++;
+            }
+            
+            const card = document.createElement('div');
+            card.className = 'risk-card';
+            card.onclick = () => openModal(risco);
+            card.innerHTML = `
+                <div class="risk-header">
+                    <span class="risk-title">${risco.nome}</span>
+                    <span class="risk-level ${nivelClass}">${nivelText}</span>
+                </div>
+                <div class="risk-desc">${risco.descricao}</div>
+                <div class="risk-mitigation">
+                    <i class="fas fa-check-circle"></i> ${risco.mitigacao.substring(0, 80)}...
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+        
+        document.getElementById('totalCritical').innerText = critical;
+        document.getElementById('totalHigh').innerText = high;
+        document.getElementById('totalMedium').innerText = medium;
+        document.getElementById('totalLow').innerText = low;
+    }
+
+    // Modal
+    function openModal(risco) {
+        document.getElementById('modalTitle').innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${risco.nome}`;
+        document.getElementById('modalDesc').innerHTML = risco.descricao;
+        document.getElementById('modalMitigation').innerHTML = risco.mitigacao;
+        document.getElementById('modalDeadline').innerHTML = risco.prazo;
+        document.getElementById('riskModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('riskModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Fechar modal ao clicar fora
+    window.onclick = function(event) {
+        const modal = document.getElementById('riskModal');
+        if (event.target === modal) closeModal();
+    }
+
+    // Gráfico de distribuição
+    let riskChart = null;
+    function initChart() {
+        const ctx = document.getElementById('riskChart').getContext('2d');
+        const categorias = {
+            'Segurança': 0,
+            'Infraestrutura': 0,
+            'Financeiro': 0,
+            'Trabalhista': 0,
+            'Governança': 0,
+            'Social': 0,
+            'Tecnologia': 0
+        };
+        
+        riscos.forEach(risco => {
+            if (categorias.hasOwnProperty(risco.categoria)) {
+                categorias[risco.categoria]++;
+            }
+        });
+        
+        riskChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(categorias),
+                datasets: [{
+                    label: 'Quantidade de Riscos',
+                    data: Object.values(categorias),
+                    backgroundColor: '#ef6c00',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { position: 'top' }
+                }
+            }
+        });
+    }
+
+    // Inicialização
+    renderRiscos();
+    initChart();
+</script>
+
+</body>
+</html>
