@@ -1,0 +1,194 @@
+/* css/style.css - Estilos complementares e otimizações */
+/* Reset e base já estão no inline, este arquivo serve para modularização e override */
+
+:root {
+    --primary-dark: #0b2b3b;
+    --primary-medium: #123e52;
+    --accent-gold: #f5a623;
+    --accent-gold-dark: #e09116;
+    --text-dark: #1a2c3e;
+    --text-light: #5a7f92;
+    --bg-light: #f4f7fc;
+    --card-white: #ffffff;
+    --border-light: #e2edf2;
+}
+
+/* Animações suaves */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.qr-card {
+    animation: fadeInUp 0.5s ease-out forwards;
+    animation-fill-mode: both;
+}
+
+/* Delay progressivo para os cards */
+.qr-card:nth-child(1) { animation-delay: 0.05s; }
+.qr-card:nth-child(2) { animation-delay: 0.1s; }
+.qr-card:nth-child(3) { animation-delay: 0.15s; }
+.qr-card:nth-child(4) { animation-delay: 0.2s; }
+.qr-card:nth-child(5) { animation-delay: 0.25s; }
+.qr-card:nth-child(6) { animation-delay: 0.3s; }
+
+/* Melhorias de acessibilidade */
+.btn-link:focus-visible,
+.qr-card:focus-within {
+    outline: 2px solid var(--accent-gold);
+    outline-offset: 2px;
+}
+
+/* Estilo para impressão - útil para gerar versão impressa dos QR Codes */
+@media print {
+    .hero {
+        background: white;
+        color: black;
+        border-bottom: 2px solid #ccc;
+    }
+    .btn-link {
+        display: none;
+    }
+    .qr-code-element {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+    body {
+        background: white;
+    }
+    .qr-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
+
+/* Loading state para os QR Codes */
+.qr-placeholder {
+    min-height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* Tooltip customizado para melhor UX */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background: var(--primary-dark);
+    color: white;
+    font-size: 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+
+[data-tooltip]:hover:before {
+    opacity: 1;
+}
+
+/* Scroll suave para toda a página */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Estilização da barra de rolagem */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--border-light);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-gold);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-gold-dark);
+}
+
+/* Responsividade adicional */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.4rem;
+    }
+    .hero p {
+        font-size: 0.9rem;
+    }
+    .section-title {
+        font-size: 1.2rem;
+    }
+    .card-header h3 {
+        font-size: 1rem;
+    }
+    .qr-code-element {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Suporte a dark mode (opcional) */
+@media (prefers-color-scheme: dark) {
+    body:not(.light-mode) {
+        background: #1a1a2e;
+        color: #e0e0e0;
+    }
+    body:not(.light-mode) .qr-card {
+        background: #2a2a3e;
+        border-color: #3a3a4e;
+    }
+    body:not(.light-mode) .card-header {
+        background: #222236;
+        border-bottom-color: #3a3a4e;
+    }
+    body:not(.light-mode) .card-header h3 {
+        color: #f5a623;
+    }
+    body:not(.light-mode) .resource-desc {
+        background: #1e1e2e;
+        color: #c0c0d0;
+    }
+    body:not(.light-mode) .btn-link {
+        background: #2a2a3e;
+        border-color: #4a4a5e;
+        color: #f5a623;
+    }
+    body:not(.light-mode) footer {
+        background: #1a1a2e;
+    }
+}
+
+/* Estilo para badges e destaques */
+.badge-new {
+    background: var(--accent-gold);
+    color: var(--primary-dark);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    margin-left: 8px;
+    vertical-align: middle;
+}
