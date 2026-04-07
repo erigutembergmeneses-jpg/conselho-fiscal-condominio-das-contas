@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Dashboard ESG | Sustentabilidade para Condomínios</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e9 100%);
+            color: #1a3a2a;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .hero-esg {
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #388e3c 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .hero-esg h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-esg h1 i {
+            background: white;
+            color: #2e7d32;
+            padding: 0.5rem;
+            border-radius: 50%;
+            font-size: 1.5rem;
+        }
+
+        .hero-esg p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .badge-esg {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Seções */
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1.2rem 0;
+            border-left: 6px solid #2e7d32;
+            padding-left: 1rem;
+            color: #1b5e20;
+        }
+
+        .section-title i {
+            color: #2e7d32;
+            margin-right: 0.6rem;
+        }
+
+        /* Cards de métricas */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+            border-top: 4px solid #2e7d32;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-icon {
+            font-size: 2.5rem;
+            color: #2e7d32;
+            margin-bottom: 0.8rem;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1b5e20;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #5a6e5a;
+            margin-top: 0.3rem;
+        }
+
+        .metric-trend-up {
+            color: #4caf50;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .metric-trend-down {
+            color: #f44336;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Grid de gráficos */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .chart-card h3 {
+            font-size: 1.1rem;
+            color: #1b5e20;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+
+        canvas {
+            max-height: 250px;
+            width: 100%;
+        }
+
+        /* Checklist ESG */
+        .checklist-esg {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .checklist-esg h3 {
+            font-size: 1.2rem;
+            color: #1b5e20;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #e8f5e9;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .checklist-item:hover {
+            background: #f1f8e9;
+            border-radius: 0.8rem;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #2e7d32;
+        }
+
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #2c3e2c;
+        }
+
+        .checklist-score {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 1rem;
+            text-align: center;
+        }
+
+        .checklist-score span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        /* Recomendações */
+        .recommendations {
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .recommendations h3 {
+            color: #1b5e20;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rec-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .rec-item {
+            background: white;
+            padding: 0.8rem 1rem;
+            border-radius: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-left: 4px solid #2e7d32;
+        }
+
+        .rec-item i {
+            font-size: 1.2rem;
+            color: #2e7d32;
+        }
+
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #2e7d32;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn-voltar:hover {
+            background: #1b5e20;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #1b5e20;
+            color: white;
+            margin-top: 2rem;
+            border-top-left-radius: 2rem;
+            border-top-right-radius: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .hero-esg h1 { font-size: 1.6rem; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero-esg">
+    <a href="index.html" class="btn-voltar" style="position: absolute; left: 1.5rem; top: 1.5rem; background: rgba(255,255,255,0.2);">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+    <h1><i class="fas fa-leaf"></i> Dashboard ESG</h1>
+    <p>Métricas de Sustentabilidade, Responsabilidade Social e Governança para o seu condomínio</p>
+    <div class="badge-esg"><i class="fas fa-chart-line"></i> Acompanhamento em tempo real</div>
+</div>
+
+<div class="container">
+
+    <!-- Indicadores principais -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-icon"><i class="fas fa-charging-station"></i></div>
+            <div class="metric-value" id="economiaEnergia">32%</div>
+            <div class="metric-label">Economia de Energia (2025)</div>
+            <div class="metric-trend-up"><i class="fas fa-arrow-up"></i> +8% vs 2024</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon"><i class="fas fa-water"></i></div>
+            <div class="metric-value" id="economiaAgua">24%</div>
+            <div class="metric-label">Redução no Consumo de Água</div>
+            <div class="metric-trend-up"><i class="fas fa-arrow-up"></i> +5% vs 2024</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon"><i class="fas fa-recycle"></i></div>
+            <div class="metric-value" id="reciclagem">67%</div>
+            <div class="metric-label">Taxa de Reciclagem</div>
+            <div class="metric-trend-up"><i class="fas fa-arrow-up"></i> +12% vs 2024</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon"><i class="fas fa-smile"></i></div>
+            <div class="metric-value" id="satisfacao">89%</div>
+            <div class="metric-label">Satisfação dos Moradores</div>
+            <div class="metric-trend-up"><i class="fas fa-arrow-up"></i> +3% vs 2024</div>
+        </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="charts-grid">
+        <div class="chart-card">
+            <h3><i class="fas fa-bolt"></i> Consumo de Energia (kWh/mês)</h3>
+            <div class="chart-container">
+                <canvas id="energiaChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-card">
+            <h3><i class="fas fa-tint"></i> Consumo de Água (m³/mês)</h3>
+            <div class="chart-container">
+                <canvas id="aguaChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-card">
+            <h3><i class="fas fa-chart-pie"></i> Destinação de Resíduos</h3>
+            <div class="chart-container">
+                <canvas id="residuosChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-card">
+            <h3><i class="fas fa-coins"></i> ROI Sustentável</h3>
+            <div class="chart-container">
+                <canvas id="roiChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checklist ESG Interativo -->
+    <div class="checklist-esg">
+        <h3><i class="fas fa-clipboard-list"></i> Checklist de Sustentabilidade ESG</h3>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="item1">
+            <label for="item1">🌞 Implantação de sistema de energia solar (redução de até 40% na conta de luz)</label>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="item2">
+            <label for="item2">💧 Sistema de captação de água da chuva para irrigação e limpeza</label>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="item3">
+            <label for="item3">♻️ Coleta seletiva e parceria com cooperativa de reciclagem</label>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="item4">
+            <label for="item4">🚲 Bicicletário e infraestrutura para mobilidade ativa</label>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="item5">
+            <label for="item5">📋 Código de conduta com práticas socioambientais</label>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="item6">
+            <label for="item6">🔌 Medição individualizada de consumo (água/gás/energia)</label>
+        </div>
+        <div class="checklist-score">
+            🌱 <strong>Score ESG do seu condomínio:</strong> <span id="esgScore">0</span>%
+            <div style="font-size: 0.8rem; margin-top: 0.5rem;">Quanto mais itens implementados, maior o índice de sustentabilidade!</div>
+        </div>
+    </div>
+
+    <!-- Recomendações automáticas -->
+    <div class="recommendations">
+        <h3><i class="fas fa-lightbulb"></i> Recomendações Inteligentes</h3>
+        <div class="rec-list" id="recomendacoes">
+            <div class="rec-item"><i class="fas fa-solar-panel"></i> Considere energia solar para reduzir custos</div>
+            <div class="rec-item"><i class="fas fa-water"></i> Instale redutores de vazão nas torneiras</div>
+            <div class="rec-item"><i class="fas fa-tree"></i> Crie uma área verde compartilhada</div>
+        </div>
+    </div>
+
+    <!-- Selo ESG -->
+    <div style="text-align: center; margin-top: 2rem; padding: 1rem;">
+        <div style="background: linear-gradient(135deg, #c8e6c9, #a5d6a7); border-radius: 2rem; padding: 1rem; display: inline-block;">
+            <i class="fas fa-certificate" style="font-size: 2rem; color: #2e7d32;"></i>
+            <span style="font-weight: 700; color: #1b5e20;"> Condomínio certificado com práticas ESG</span>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <i class="fas fa-leaf"></i> Dashboard ESG - Conselho Fiscal: Com Domínio das Contas<br>
+    Métricas atualizadas com base em dados do setor condominial | <i class="fas fa-chart-line"></i> Acompanhe a evolução da sustentabilidade do seu condomínio
+</footer>
+
+<script>
+    // Gráfico de Energia
+    const ctxEnergia = document.getElementById('energiaChart').getContext('2d');
+    new Chart(ctxEnergia, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            datasets: [{
+                label: 'kWh/mês',
+                data: [18500, 18200, 17800, 17500, 16800, 16200, 15800, 15500, 15200, 14800, 14500, 14200],
+                borderColor: '#2e7d32',
+                backgroundColor: 'rgba(46,125,50,0.1)',
+                fill: true,
+                tension: 0.3,
+                pointBackgroundColor: '#1b5e20'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { position: 'top' }
+            }
+        }
+    });
+
+    // Gráfico de Água
+    const ctxAgua = document.getElementById('aguaChart').getContext('2d');
+    new Chart(ctxAgua, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            datasets: [{
+                label: 'm³/mês',
+                data: [420, 415, 408, 395, 380, 365, 350, 340, 335, 328, 320, 315],
+                backgroundColor: '#4caf50',
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
+
+    // Gráfico de Resíduos (Pizza)
+    const ctxResiduos = document.getElementById('residuosChart').getContext('2d');
+    new Chart(ctxResiduos, {
+        type: 'pie',
+        data: {
+            labels: ['Reciclado (67%)', 'Orgânico (23%)', 'Rejeito (10%)'],
+            datasets: [{
+                data: [67, 23, 10],
+                backgroundColor: ['#2e7d32', '#ff9800', '#9e9e9e'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // Gráfico de ROI (Barras)
+    const ctxRoi = document.getElementById('roiChart').getContext('2d');
+    new Chart(ctxRoi, {
+        type: 'bar',
+        data: {
+            labels: ['Energia Solar', 'Captação Chuva', 'LEDs', 'Medição Indiv.'],
+            datasets: [{
+                label: 'Retorno sobre Investimento (anos)',
+                data: [4.5, 3.2, 1.8, 2.5],
+                backgroundColor: '#66bb6a',
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { position: 'top' }
+            }
+        }
+    });
+
+    // Função para atualizar Score ESG
+    function atualizarScore() {
+        const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+        let total = checkboxes.length;
+        let checked = 0;
+        checkboxes.forEach(cb => {
+            if (cb.checked) checked++;
+        });
+        const score = Math.round((checked / total) * 100);
+        document.getElementById('esgScore').innerText = score;
+        
+        // Atualiza recomendações baseadas nos itens não marcados
+        const recomendacoesDiv = document.getElementById('recomendacoes');
+        const recomendacoes = [];
+        
+        if (!document.getElementById('item1').checked) {
+            recomendacoes.push('<div class="rec-item"><i class="fas fa-solar-panel"></i> 🔴 Prioridade: Implantar energia solar - redução de até 40% na conta</div>');
+        }
+        if (!document.getElementById('item2').checked) {
+            recomendacoes.push('<div class="rec-item"><i class="fas fa-water"></i> 🔴 Instalar sistema de captação de água da chuva</div>');
+        }
+        if (!document.getElementById('item3').checked) {
+            recomendacoes.push('<div class="rec-item"><i class="fas fa-recycle"></i> 🟡 Implementar coleta seletiva com cooperativa</div>');
+        }
+        if (!document.getElementById('item4').checked) {
+            recomendacoes.push('<div class="rec-item"><i class="fas fa-bicycle"></i> 🟢 Criar bicicletário e incentivar mobilidade ativa</div>');
+        }
+        if (!document.getElementById('item5').checked) {
+            recomendacoes.push('<div class="rec-item"><i class="fas fa-file-signature"></i> 📋 Elaborar código de conduta socioambiental</div>');
+        }
+        if (!document.getElementById('item6').checked) {
+            recomendacoes.push('<div class="rec-item"><i class="fas fa-charging-station"></i> 🔌 Implementar medição individualizada</div>');
+        }
+        
+        if (recomendacoes.length === 0) {
+            recomendacoesDiv.innerHTML = '<div class="rec-item"><i class="fas fa-trophy"></i> 🏆 Parabéns! Seu condomínio é referência em ESG!</div>';
+        } else {
+            recomendacoesDiv.innerHTML = recomendacoes.join('');
+        }
+    }
+
+    // Função para alternar checkbox
+    function toggleCheck(element) {
+        const checkbox = element.querySelector('input[type="checkbox"]');
+        if (checkbox) {
+            checkbox.checked = !checkbox.checked;
+            atualizarScore();
+        }
+    }
+
+    // Inicializar score
+    atualizarScore();
+</script>
+
+</body>
+</html>
