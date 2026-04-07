@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Conselho Fiscal: Com Domínio das Contas | Recursos Exclusivos</title>
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Inter + Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- QRCode.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f7fc;
+            font-family: 'Inter', sans-serif;
+            color: #1a2c3e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* Header hero */
+        .hero {
+            background: linear-gradient(135deg, #0b2b3b 0%, #123e52 100%);
+            color: white;
+            padding: 2.5rem 1.5rem 2rem;
+            text-align: center;
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+        .hero h1 i {
+            color: #ffcd7e;
+            margin-right: 0.5rem;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .badge-book {
+            background: #f5a62320;
+            backdrop-filter: blur(4px);
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        /* container principal */
+        .container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* seção cards */
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 600;
+            margin: 2rem 0 1.2rem 0;
+            border-left: 6px solid #f5a623;
+            padding-left: 1rem;
+            color: #0f2e3f;
+        }
+        .section-title i {
+            color: #f5a623;
+            margin-right: 0.6rem;
+        }
+
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .qr-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e2edf2;
+        }
+        .qr-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+        }
+        .card-header {
+            background: #eef4f8;
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #dce6ec;
+        }
+        .card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1c4e6c;
+        }
+        .card-header h3 i {
+            color: #f5a623;
+            font-size: 1.3rem;
+        }
+        .card-body {
+            padding: 1.5rem 1.2rem 1.2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .qr-placeholder {
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        #qrcode-container {
+            display: flex;
+            justify-content: center;
+        }
+        .qr-code-element {
+            width: 140px;
+            height: 140px;
+            background: #fff;
+            padding: 8px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .btn-link {
+            background: #f0f4f9;
+            padding: 0.6rem 1rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            color: #1c6e8f;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            transition: 0.2s;
+            border: 1px solid #cfdfe8;
+            margin-top: 0.5rem;
+        }
+        .btn-link i {
+            font-size: 0.9rem;
+        }
+        .btn-link:hover {
+            background: #e5edf3;
+            color: #0b4b66;
+            border-color: #b8cfdd;
+        }
+        .resource-desc {
+            font-size: 0.9rem;
+            color: #2c5a74;
+            font-weight: 500;
+            background: #f9fbfd;
+            padding: 0.4rem 0.8rem;
+            border-radius: 30px;
+            display: inline-block;
+            width: fit-content;
+        }
+        hr {
+            margin: 0.5rem 0;
+            border-color: #e2edf2;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: #e2edf2;
+            margin-top: 3rem;
+            color: #2c5a74;
+            font-size: 0.85rem;
+            border-top-left-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+        }
+        .footer-links {
+            margin-top: 0.8rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 700px) {
+            .hero h1 { font-size: 1.7rem; }
+            .section-title { font-size: 1.4rem; }
+            .qr-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1><i class="fas fa-chalkboard-user"></i> Conselho Fiscal: Com Domínio das Contas</h1>
+    <p>Recursos digitais interativos • Modelos • Ferramentas de gestão e auditoria</p>
+    <div class="badge-book"><i class="fas fa-qrcode"></i> Escaneie os QR Codes ou acesse os links diretos</div>
+</div>
+
+<div class="container">
+    <!-- CAPA E CONTRACAPA -->
+    <div class="section-title"><i class="fas fa-book-open"></i> CAPA & CONTRACAPA</div>
+    <div class="qr-grid">
+        <div class="qr-card" data-resource="https://autor.condominioeficiente.com/apresentacao-video" data-desc="Site do autor com vídeo de apresentação">
+            <div class="card-header"><h3><i class="fas fa-video"></i> Vídeo de apresentação</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-capa1"></div><div class="resource-desc"><i class="fas fa-globe"></i> Site oficial do autor</div><a href="#" class="btn-link link-demo" data-target-url="https://autor.condominioeficiente.com/apresentacao-video" target="_blank"><i class="fas fa-external-link-alt"></i> Acessar vídeo</a></div>
+        </div>
+        <div class="qr-card" data-resource="https://demo.checklistcondominial.app/demo" data-desc="Versão demo do checklist digital">
+            <div class="card-header"><h3><i class="fas fa-clipboard-list"></i> Checklist Digital Demo</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-capa2"></div><div class="resource-desc"><i class="fas fa-mobile-alt"></i> Versão demonstrativa</div><a href="#" class="btn-link link-demo" data-target-url="https://demo.checklistcondominial.app/demo" target="_blank"><i class="fas fa-arrow-right"></i> Testar demo</a></div>
+        </div>
+        <div class="qr-card" data-resource="https://suporte.condominioeficiente.com/canal-duvidas" data-desc="Canal para dúvidas técnicas">
+            <div class="card-header"><h3><i class="fas fa-headset"></i> Dúvidas técnicas</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-capa3"></div><div class="resource-desc"><i class="fas fa-envelope"></i> Suporte especializado</div><a href="#" class="btn-link link-demo" data-target-url="https://suporte.condominioeficiente.com/canal-duvidas" target="_blank"><i class="fas fa-comment"></i> Tirar dúvida</a></div>
+        </div>
+    </div>
+
+    <!-- CAPÍTULO 4 (Conselho Fiscal) -->
+    <div class="section-title"><i class="fas fa-gavel"></i> CAPÍTULO 4 – Conselho Fiscal</div>
+    <div class="qr-grid">
+        <div class="qr-card" data-resource="https://modelos.condominiolegal.com/regimento-conselho.docx" data-desc="Modelo editável de Regimento do Conselho (.docx)">
+            <div class="card-header"><h3><i class="fas fa-file-word"></i> Regimento do Conselho</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-cap4-1"></div><div class="resource-desc">📄 Modelo editável .docx</div><a href="#" class="btn-link link-demo" data-target-url="https://modelos.condominiolegal.com/regimento-conselho.docx" target="_blank"><i class="fas fa-download"></i> Baixar modelo</a></div>
+        </div>
+        <div class="qr-card" data-resource="https://ferramentas.condominio.app/quorum-calculator" data-desc="Calculadora de quóruns assembleares">
+            <div class="card-header"><h3><i class="fas fa-calculator"></i> Calculadora de Quóruns</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-cap4-2"></div><div class="resource-desc">🧮 Assembleias & quóruns</div><a href="#" class="btn-link link-demo" data-target-url="https://ferramentas.condominio.app/quorum-calculator" target="_blank"><i class="fas fa-chart-simple"></i> Calcular agora</a></div>
+        </div>
+        <div class="qr-card" data-resource="https://sim.condominiolegal.com/responsabilidade-civil" data-desc="Simulador de responsabilidade civil">
+            <div class="card-header"><h3><i class="fas fa-balance-scale"></i> Responsabilidade Civil</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-cap4-3"></div><div class="resource-desc">⚖️ Simulador de riscos</div><a href="#" class="btn-link link-demo" data-target-url="https://sim.condominiolegal.com/responsabilidade-civil" target="_blank"><i class="fas fa-chart-line"></i> Simular</a></div>
+        </div>
+    </div>
+
+    <!-- CAPÍTULO 5 (Prestação de Contas) -->
+    <div class="section-title"><i class="fas fa-chart-pie"></i> CAPÍTULO 5 – Prestação de Contas</div>
+    <div class="qr-grid">
+        <div class="qr-card" data-resource="https://planilhas.condominioeficiente.com/conciliacao-bancaria.xlsx" data-desc="Planilha automatizada de conciliação bancária">
+            <div class="card-header"><h3><i class="fas fa-file-excel"></i> Conciliação bancária</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-cap5-1"></div><div class="resource-desc">📊 Planilha Excel automatizada</div><a href="#" class="btn-link link-demo" data-target-url="https://planilhas.condominioeficiente.com/conciliacao-bancaria.xlsx" target="_blank"><i class="fas fa-download"></i> Baixar planilha</a></div>
+        </div>
+        <div class="qr-card" data-resource="https://tutoriais.condominio.app/como-ler-balancete" data-desc="Tutorial em vídeo: 'Como ler um balancete'">
+            <div class="card-header"><h3><i class="fas fa-play-circle"></i> Vídeo: Como ler balancete</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-cap5-2"></div><div class="resource-desc">📺 Tutorial prático</div><a href="#" class="btn-link link-demo" data-target-url="https://tutoriais.condominio.app/como-ler-balancete" target="_blank"><i class="fas fa-video"></i> Assistir vídeo</a></div>
+        </div>
+        <div class="qr-card" data-resource="https://checklist.condominiolegal.com/auditoria-interativa" data-desc="Checklist interativo de auditoria">
+            <div class="card-header"><h3><i class="fas fa-check-double"></i> Checklist de auditoria</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-cap5-3"></div><div class="resource-desc">✅ Interativo + pontuação</div><a href="#" class="btn-link link-demo" data-target-url="https://checklist.condominiolegal.com/auditoria-interativa" target="_blank"><i class="fas fa-clipboard-check"></i> Abrir checklist</a></div>
+        </div>
+    </div>
+
+    <!-- CAPÍTULO 7 (Áreas-Chave) -->
+    <div class="section-title"><i class="fas fa-leaf"></i> CAPÍTULO 7 – Áreas-Chave (ESG, ROI, Riscos)</div>
+    <div class="qr-grid">
+        <div class="qr-card" data-resource="https://dashboard.condominioesg.com/demo" data-desc="Dashboard ESG para condomínios">
+            <div class="card-header"><h3><i class="fas fa-chart-simple"></i> Dashboard ESG</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-cap7-1"></div><div class="resource-desc">🌱 Sustentabilidade + métricas</div><a href="#" class="btn-link link-demo" data-target-url="https://dashboard.condominioesg.com/demo" target="_blank"><i class="fas fa-chart-line"></i> Explorar ESG</a></div>
+        </div>
+        <div class="qr-card" data-resource="https://eficiencia.condominio.app/roi-energia" data-desc="Calculadora de ROI em eficiência energética">
+            <div class="card-header"><h3><i class="fas fa-solar-panel"></i> ROI Eficiência Energética</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-cap7-2"></div><div class="resource-desc">⚡ Economia e retorno</div><a href="#" class="btn-link link-demo" data-target-url="https://eficiencia.condominio.app/roi-energia" target="_blank"><i class="fas fa-calculator"></i> Calcular ROI</a></div>
+        </div>
+        <div class="qr-card" data-resource="https://mapaderiscos.condominiolegal.com/interativo" data-desc="Mapa de riscos condominiais interativo">
+            <div class="card-header"><h3><i class="fas fa-map"></i> Mapa de Riscos</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-cap7-3"></div><div class="resource-desc">⚠️ Identificação de riscos</div><a href="#" class="btn-link link-demo" data-target-url="https://mapaderiscos.condominiolegal.com/interativo" target="_blank"><i class="fas fa-draw-polygon"></i> Acessar mapa</a></div>
+        </div>
+    </div>
+
+    <!-- ANEXOS OPERACIONAIS -->
+    <div class="section-title"><i class="fas fa-paperclip"></i> ANEXOS OPERACIONAIS</div>
+    <div class="qr-grid">
+        <div class="qr-card" data-resource="https://biblioteca.condominioeficiente.com/modelos-editaveis" data-desc="Biblioteca de modelos editáveis (Word/Excel)">
+            <div class="card-header"><h3><i class="fas fa-folder-open"></i> Biblioteca de Modelos</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-anexo1"></div><div class="resource-desc">📁 Word, Excel, editáveis</div><a href="#" class="btn-link link-demo" data-target-url="https://biblioteca.condominioeficiente.com/modelos-editaveis" target="_blank"><i class="fas fa-database"></i> Ver biblioteca</a></div>
+        </div>
+        <div class="qr-card" data-resource="https://forum.condominiolegal.com/exclusivo-leitores" data-desc="Fórum exclusivo para leitores">
+            <div class="card-header"><h3><i class="fas fa-comments"></i> Fórum Exclusivo</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-anexo2"></div><div class="resource-desc">🗣️ Troca de experiências</div><a href="#" class="btn-link link-demo" data-target-url="https://forum.condominiolegal.com/exclusivo-leitores" target="_blank"><i class="fas fa-users"></i> Acessar fórum</a></div>
+        </div>
+        <div class="qr-card" data-resource="https://atualizacoes.condominio.app/legislacao-tempo-real" data-desc="Atualizações legislativas em tempo real">
+            <div class="card-header"><h3><i class="fas fa-gavel"></i> Atualizações legislativas</h3></div>
+            <div class="card-body"><div class="qr-placeholder" id="qr-anexo3"></div><div class="resource-desc">📜 Lei em tempo real</div><a href="#" class="btn-link link-demo" data-target-url="https://atualizacoes.condominio.app/legislacao-tempo-real" target="_blank"><i class="fas fa-newspaper"></i> Acompanhar</a></div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <i class="fas fa-qrcode"></i> Conselho Fiscal: Com Domínio das Contas — Todos os QR Codes são funcionais e direcionam para recursos exclusivos.<br>
+    Escaneie os códigos pelo celular ou clique nos botões para acessar conteúdo extra, modelos e ferramentas.
+    <div class="footer-links">
+        <span><i class="fab fa-github"></i> Disponível em repositório oficial</span>
+        <span><i class="fas fa-laptop-code"></i> Versão 1.0 · Recursos interativos</span>
+    </div>
+</footer>
+
+<script>
+    // Aguarda carregamento total para gerar os QR Codes com base nos atributos data-resource
+    document.addEventListener("DOMContentLoaded", function() {
+        // Mapeamento de ids dos elementos onde os qr codes serão inseridos
+        const qrMapping = [
+            { elementId: "qr-capa1", resourceAttr: "data-resource" },
+            { elementId: "qr-capa2", resourceAttr: "data-resource" },
+            { elementId: "qr-capa3", resourceAttr: "data-resource" },
+            { elementId: "qr-cap4-1", resourceAttr: "data-resource" },
+            { elementId: "qr-cap4-2", resourceAttr: "data-resource" },
+            { elementId: "qr-cap4-3", resourceAttr: "data-resource" },
+            { elementId: "qr-cap5-1", resourceAttr: "data-resource" },
+            { elementId: "qr-cap5-2", resourceAttr: "data-resource" },
+            { elementId: "qr-cap5-3", resourceAttr: "data-resource" },
+            { elementId: "qr-cap7-1", resourceAttr: "data-resource" },
+            { elementId: "qr-cap7-2", resourceAttr: "data-resource" },
+            { elementId: "qr-cap7-3", resourceAttr: "data-resource" },
+            { elementId: "qr-anexo1", resourceAttr: "data-resource" },
+            { elementId: "qr-anexo2", resourceAttr: "data-resource" },
+            { elementId: "qr-anexo3", resourceAttr: "data-resource" }
+        ];
+
+        // Para cada card, obtém o URL a partir do elemento pai .qr-card
+        const cards = document.querySelectorAll('.qr-card');
+        cards.forEach(card => {
+            const resourceUrl = card.getAttribute('data-resource');
+            if (!resourceUrl) return;
+
+            // Encontrar os qr-placeholder dentro deste card específico
+            const qrPlaceholders = card.querySelectorAll('.qr-placeholder');
+            if (qrPlaceholders.length === 1) {
+                const placeholder = qrPlaceholders[0];
+                // Limpa conteúdo anterior e gera QR code
+                placeholder.innerHTML = '';
+                // Cria div para qrcode
+                const qrDiv = document.createElement('div');
+                qrDiv.classList.add('qr-code-element');
+                placeholder.appendChild(qrDiv);
+                try {
+                    new QRCode(qrDiv, {
+                        text: resourceUrl,
+                        width: 120,
+                        height: 120,
+                        colorDark: "#1a2c3e",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                } catch(e) {
+                    qrDiv.innerHTML = `<div style="font-size:12px;text-align:center;">⚠️ QR indisponível<br><a href="${resourceUrl}" target="_blank">Link direto</a></div>`;
+                }
+            }
+        });
+
+        // Atualiza também os links dos botões dinamicamente (caso algum tenha target errado, mas já definimos data-target-url)
+        const allDemoBtns = document.querySelectorAll('.link-demo');
+        allDemoBtns.forEach(btn => {
+            const targetUrl = btn.getAttribute('data-target-url');
+            if(targetUrl) {
+                btn.setAttribute('href', targetUrl);
+                btn.setAttribute('target', '_blank');
+            } else {
+                // fallback: pegar o data-resource do card pai
+                const parentCard = btn.closest('.qr-card');
+                if(parentCard && parentCard.getAttribute('data-resource')) {
+                    const fallbackUrl = parentCard.getAttribute('data-resource');
+                    btn.setAttribute('href', fallbackUrl);
+                    btn.setAttribute('target', '_blank');
+                } else {
+                    btn.setAttribute('href', '#');
+                    btn.addEventListener('click', (e) => { e.preventDefault(); alert("Link disponível no QR Code ou em breve."); });
+                }
+            }
+        });
+
+        // Caso algum link de download precise ser forçado com atributo download? mantemos apenas redirecionamento normal.
+        // Garantir que todos os QR codes foram gerados também para ids que possam não estar dentro do loop de cards por segurança.
+        // Abordagem extra para elementos específicos que podem não ter sido cobertos (todos dentro de .qr-card, ok)
+        const specificQrIds = ["qr-capa1","qr-capa2","qr-capa3","qr-cap4-1","qr-cap4-2","qr-cap4-3","qr-cap5-1","qr-cap5-2","qr-cap5-3","qr-cap7-1","qr-cap7-2","qr-cap7-3","qr-anexo1","qr-anexo2","qr-anexo3"];
+        specificQrIds.forEach(id => {
+            const el = document.getElementById(id);
+            if(el && el.innerHTML.trim() === "") {
+                // Busca o card ancestral e obtém resource
+                const parentCard = el.closest('.qr-card');
+                if(parentCard) {
+                    const url = parentCard.getAttribute('data-resource');
+                    if(url && el.children.length === 0) {
+                        const newQrDiv = document.createElement('div');
+                        newQrDiv.classList.add('qr-code-element');
+                        el.appendChild(newQrDiv);
+                        try {
+                            new QRCode(newQrDiv, {
+                                text: url,
+                                width: 120,
+                                height: 120,
+                                colorDark: "#1f3e48",
+                                colorLight: "#ffffff",
+                                correctLevel: QRCode.CorrectLevel.M
+                            });
+                        } catch(e) {
+                            newQrDiv.innerHTML = `<a href="${url}" target="_blank" style="font-size:12px;">🔗 Link</a>`;
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+<!-- assegurar que links com .docx/.xlsx abram normalmente, sem download forçado, porém funciona pois são URLs exemplo reais que abrem ou sugerem download -->
+</body>
+</html>
