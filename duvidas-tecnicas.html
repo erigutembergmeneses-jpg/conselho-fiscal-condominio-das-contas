@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Dúvidas Técnicas - Fiscalização de Condomínios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .faq {
+            margin: 20px 0;
+        }
+        .faq-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .faq-item h3 {
+            margin: 0;
+            cursor: pointer;
+            color: #007BFF;
+        }
+        .faq-item p {
+            display: none;
+            margin: 5px 0 0;
+        }
+    </style>
+    <script>
+        // Script simples para abrir/fechar respostas
+        function toggleAnswer(id) {
+            const answer = document.getElementById(id);
+            answer.style.display = (answer.style.display === "block") ? "none" : "block";
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Dúvidas Técnicas na Fiscalização de Condomínios</h1>
+    <p>Aqui estão algumas perguntas frequentes para ajudar conselheiros e moradores:</p>
+
+    <div class="faq">
+        <div class="faq-item">
+            <h3 onclick="toggleAnswer('q1')">1. O que é o conselho fiscal do condomínio?</h3>
+            <p id="q1">O conselho fiscal é responsável por analisar as contas apresentadas pelo síndico, verificar balancetes e emitir pareceres sobre a gestão financeira.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 onclick="toggleAnswer('q2')">2. Qual a diferença entre balancete e prestação de contas?</h3>
+            <p id="q2">O balancete é um resumo mensal das movimentações financeiras, enquanto a prestação de contas é o relatório anual completo apresentado em assembleia.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 onclick="toggleAnswer('q3')">3. O conselho fiscal pode reprovar as contas do síndico?</h3>
+            <p id="q3">Sim, caso identifique irregularidades ou inconsistências, o conselho fiscal pode recomendar a reprovação das contas em assembleia.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 onclick="toggleAnswer('q4')">4. Quais documentos o síndico deve apresentar ao conselho fiscal?</h3>
+            <p id="q4">Notas fiscais, comprovantes de pagamento, extratos bancários e contratos firmados pelo condomínio devem ser disponibilizados para análise.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 onclick="toggleAnswer('q5')">5. Como moradores podem tirar dúvidas diretamente?</h3>
+            <p id="q5">Moradores podem encaminhar suas dúvidas ao conselho fiscal ou solicitar esclarecimentos em assembleias e reuniões específicas.</p>
+        </div>
+    </div>
+
+    <p><a href="index.html">⬅ Voltar para a Home</a></p>
+
+</body>
+</html>
