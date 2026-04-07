@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ROI Eficiência Energética | Calculadora para Condomínios</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3d1 100%);
+            color: #1a2c3e;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .hero-roi {
+            background: linear-gradient(135deg, #e65100 0%, #ef6c00 50%, #f57c00 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .hero-roi h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-roi h1 i {
+            background: white;
+            color: #ef6c00;
+            padding: 0.5rem;
+            border-radius: 50%;
+            font-size: 1.5rem;
+        }
+
+        .hero-roi p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .badge-roi {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Botão voltar */
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #ef6c00;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn-voltar:hover {
+            background: #e65100;
+        }
+
+        /* Grid principal */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card da calculadora */
+        .calculator-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .calculator-card h2 {
+            font-size: 1.4rem;
+            color: #e65100;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 2px solid #ffe0b2;
+            padding-bottom: 0.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group label i {
+            color: #ef6c00;
+            margin-right: 0.5rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 0.8rem;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #ef6c00;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group span {
+            background: #f5f5f5;
+            padding: 0.8rem 1rem;
+            border-radius: 0.8rem;
+            font-weight: 600;
+            color: #e65100;
+        }
+
+        .btn-calcular {
+            background: linear-gradient(135deg, #ef6c00, #e65100);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-calcular:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(239,108,0,0.3);
+        }
+
+        /* Card de resultados */
+        .results-card {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: white;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .results-card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            padding-bottom: 0.8rem;
+        }
+
+        .result-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .result-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 0.3rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .result-value small {
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+
+        .roi-highlight {
+            background: #ff9800;
+            color: #1a237e;
+        }
+
+        /* Cards de comparação */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid #e0e0e0;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #ef6c00;
+        }
+
+        .comparison-card.selected {
+            border-color: #ef6c00;
+            background: #fff3e0;
+        }
+
+        .comparison-icon {
+            font-size: 2.5rem;
+            color: #ef6c00;
+            margin-bottom: 0.8rem;
+        }
+
+        .comparison-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1a2c3e;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-desc {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .comparison-roi {
+            font-weight: 700;
+            color: #ef6c00;
+            margin-top: 0.5rem;
+        }
+
+        /* Gráfico */
+        .chart-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .chart-card h3 {
+            font-size: 1.2rem;
+            color: #e65100;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Dicas */
+        .tips-card {
+            background: #fff8e1;
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-left: 5px solid #ef6c00;
+        }
+
+        .tips-card h3 {
+            color: #e65100;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tips-list {
+            list-style: none;
+        }
+
+        .tips-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .tips-list li i {
+            color: #ef6c00;
+            width: 1.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #e65100;
+            color: white;
+            margin-top: 2rem;
+            border-top-left-radius: 2rem;
+            border-top-right-radius: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .hero-roi h1 { font-size: 1.6rem; }
+            .result-value { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero-roi">
+    <a href="index.html" class="btn-voltar" style="position: absolute; left: 1.5rem; top: 1.5rem; background: rgba(255,255,255,0.2);">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+    <h1><i class="fas fa-solar-panel"></i> ROI Eficiência Energética</h1>
+    <p>Calcule o retorno sobre investimento em ações sustentáveis para o seu condomínio</p>
+    <div class="badge-roi"><i class="fas fa-calculator"></i> Simulador interativo • Economia real</div>
+</div>
+
+<div class="container">
+
+    <div class="main-grid">
+        <!-- Calculadora -->
+        <div class="calculator-card">
+            <h2><i class="fas fa-calculator"></i> Simulador de ROI</h2>
+            
+            <div class="form-group">
+                <label><i class="fas fa-charging-station"></i> Tipo de intervenção:</label>
+                <select id="tipoIntervencao" onchange="presetValues()">
+                    <option value="solar">☀️ Energia Solar (Placas Fotovoltaicas)</option>
+                    <option value="led">💡 Substituição por LED (Iluminação)</option>
+                    <option value="ar">❄️ Ar-condicionado Eficiente (Inverter)</option>
+                    <option value="sensor">📡 Sensores de Presença</option>
+                    <option value="personalizado">⚙️ Personalizado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-dollar-sign"></i> Investimento inicial (R$):</label>
+                <div class="input-group">
+                    <span>R$</span>
+                    <input type="number" id="investimento" value="50000" step="1000">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-chart-line"></i> Economia mensal esperada (R$):</label>
+                <div class="input-group">
+                    <span>R$</span>
+                    <input type="number" id="economiaMensal" value="2500" step="100">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-clock"></i> Vida útil do sistema (anos):</label>
+                <div class="input-group">
+                    <input type="number" id="vidaUtil" value="25" step="1">
+                    <span>anos</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i fa="fas fa-percent"></i> Taxa de manutenção anual (% do investimento):</label>
+                <div class="input-group">
+                    <input type="number" id="manutencao" value="2" step="0.5">
+                    <span>%</span>
+                </div>
+            </div>
+
+            <button class="btn-calcular" onclick="calcularROI()">
+                <i class="fas fa-chart-line"></i> Calcular ROI
+            </button>
+        </div>
+
+        <!-- Resultados -->
+        <div class="results-card" id="resultsCard">
+            <h2><i class="fas fa-chart-simple"></i> Resultados do Investimento</h2>
+            <div class="result-item">
+                <div class="result-label"><i class="fas fa-clock"></i> Payback (tempo de retorno)</div>
+                <div class="result-value" id="paybackValor">--</div>
+            </div>
+            <div class="result-item">
+                <div class="result-label"><i class="fas fa-chart-line"></i> ROI (Retorno sobre Investimento)</div>
+                <div class="result-value" id="roiValor">--</div>
+            </div>
+            <div class="result-item roi-highlight">
+                <div class="result-label"><i class="fas fa-coins"></i> Economia total em 25 anos</div>
+                <div class="result-value" id="economiaTotal">--</div>
+            </div>
+            <div class="result-item">
+                <div class="result-label"><i class="fas fa-tree"></i> Redução de CO₂ estimada</div>
+                <div class="result-value" id="reducaoCO2">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparação de soluções -->
+    <div class="comparison-grid">
+        <div class="comparison-card" onclick="selectSolution('solar')">
+            <div class="comparison-icon"><i class="fas fa-solar-panel"></i></div>
+            <div class="comparison-title">Energia Solar</div>
+            <div class="comparison-desc">Investimento: R$ 50.000<br>Economia mensal: R$ 2.500</div>
+            <div class="comparison-roi">ROI: +320% em 25 anos</div>
+        </div>
+        <div class="comparison-card" onclick="selectSolution('led')">
+            <div class="comparison-icon"><i class="fas fa-lightbulb"></i></div>
+            <div class="comparison-title">Iluminação LED</div>
+            <div class="comparison-desc">Investimento: R$ 15.000<br>Economia mensal: R$ 1.200</div>
+            <div class="comparison-roi">ROI: +180% em 10 anos</div>
+        </div>
+        <div class="comparison-card" onclick="selectSolution('ar')">
+            <div class="comparison-icon"><i class="fas fa-wind"></i></div>
+            <div class="comparison-title">Ar-condicionado Inverter</div>
+            <div class="comparison-desc">Investimento: R$ 30.000<br>Economia mensal: R$ 1.500</div>
+            <div class="comparison-roi">ROI: +150% em 15 anos</div>
+        </div>
+        <div class="comparison-card" onclick="selectSolution('sensor')">
+            <div class="comparison-icon"><i class="fas fa-microchip"></i></div>
+            <div class="comparison-title">Sensores de Presença</div>
+            <div class="comparison-desc">Investimento: R$ 8.000<br>Economia mensal: R$ 500</div>
+            <div class="comparison-roi">ROI: +350% em 10 anos</div>
+        </div>
+    </div>
+
+    <!-- Gráfico comparativo -->
+    <div class="chart-card">
+        <h3><i class="fas fa-chart-column"></i> Comparativo de Economia Acumulada</h3>
+        <div class="chart-container">
+            <canvas id="economiaChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Dicas e recomendações -->
+    <div class="tips-card">
+        <h3><i class="fas fa-lightbulb"></i> Dicas para maximizar seu ROI</h3>
+        <ul class="tips-list">
+            <li><i class="fas fa-check-circle"></i> Realize uma auditoria energética antes de investir</li>
+            <li><i class="fas fa-check-circle"></i> Priorize soluções com maior relação economia/investimento</li>
+            <li><i class="fas fa-check-circle"></i> Verifique linhas de financiamento verde com juros reduzidos</li>
+            <li><i class="fas fa-check-circle"></i> Considere a possibilidade de venda de energia excedente (créditos)</li>
+            <li><i class="fas fa-check-circle"></i> Mantenha manutenção preventiva para garantir eficiência</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    <i class="fas fa-charging-station"></i> ROI Eficiência Energética - Conselho Fiscal: Com Domínio das Contas<br>
+    Simule, planeje e economize com sustentabilidade
+</footer>
+
+<script>
+    let economiaChart = null;
+
+    // Valores predefinidos por tipo de solução
+    function presetValues() {
+        const tipo = document.getElementById('tipoIntervencao').value;
+        let investimento = 50000;
+        let economiaMensal = 2500;
+        let vidaUtil = 25;
+        let manutencao = 2;
+
+        switch(tipo) {
+            case 'solar':
+                investimento = 50000;
+                economiaMensal = 2500;
+                vidaUtil = 25;
+                manutencao = 2;
+                break;
+            case 'led':
+                investimento = 15000;
+                economiaMensal = 1200;
+                vidaUtil = 10;
+                manutencao = 1;
+                break;
+            case 'ar':
+                investimento = 30000;
+                economiaMensal = 1500;
+                vidaUtil = 15;
+                manutencao = 3;
+                break;
+            case 'sensor':
+                investimento = 8000;
+                economiaMensal = 500;
+                vidaUtil = 10;
+                manutencao = 1;
+                break;
+            case 'personalizado':
+                return;
+        }
+
+        document.getElementById('investimento').value = investimento;
+        document.getElementById('economiaMensal').value = economiaMensal;
+        document.getElementById('vidaUtil').value = vidaUtil;
+        document.getElementById('manutencao').value = manutencao;
+        
+        calcularROI();
+    }
+
+    // Função principal de cálculo
+    function calcularROI() {
+        const investimento = parseFloat(document.getElementById('investimento').value) || 0;
+        const economiaMensal = parseFloat(document.getElementById('economiaMensal').value) || 0;
+        const vidaUtil = parseFloat(document.getElementById('vidaUtil').value) || 1;
+        const manutencaoPercent = parseFloat(document.getElementById('manutencao').value) || 0;
+
+        if (investimento <= 0 || economiaMensal <= 0) {
+            document.getElementById('paybackValor').innerHTML = 'Insira valores válidos';
+            document.getElementById('roiValor').innerHTML = '--';
+            document.getElementById('economiaTotal').innerHTML = '--';
+            document.getElementById('reducaoCO2').innerHTML = '--';
+            return;
+        }
+
+        // Cálculos
+        const economiaAnual = economiaMensal * 12;
+        const custoManutencaoAnual = investimento * (manutencaoPercent / 100);
+        const economiaLiquidaAnual = economiaAnual - custoManutencaoAnual;
+        
+        // Payback (anos)
+        const payback = investimento / economiaLiquidaAnual;
+        
+        // Economia total no período
+        const economiaTotalPeriodo = economiaLiquidaAnual * vidaUtil;
+        
+        // ROI percentual
+        const roi = ((economiaTotalPeriodo - investimento) / investimento) * 100;
+        
+        // Redução de CO₂ (estimativa: 0.5kg CO₂ por kWh economizado, assumindo R$0.80/kWh)
+        const kWhEconomizados = economiaMensal / 0.80;
+        const reducaoCO2Anual = kWhEconomizados * 12 * 0.5; // kg CO₂/ano
+        const reducaoCO2Total = reducaoCO2Anual * vidaUtil / 1000; // toneladas
+
+        // Exibir resultados
+        document.getElementById('paybackValor').innerHTML = payback.toFixed(1) + ' <small>anos</small>';
+        document.getElementById('roiValor').innerHTML = (roi > 0 ? '+' : '') + roi.toFixed(1) + '%';
+        document.getElementById('economiaTotal').innerHTML = 'R$ ' + economiaTotalPeriodo.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+        document.getElementById('reducaoCO2').innerHTML = reducaoCO2Total.toFixed(1) + ' <small>ton CO₂</small>';
+        
+        // Atualizar gráfico
+        atualizarGrafico(investimento, economiaLiquidaAnual, vidaUtil);
+    }
+
+    // Gráfico de economia acumulada
+    function atualizarGrafico(investimento, economiaAnual, anos) {
+        const ctx = document.getElementById('economiaChart').getContext('2d');
+        
+        const labels = [];
+        const economiaAcumulada = [];
+        let acumulado = -investimento;
+        
+        for (let i = 0; i <= Math.min(anos, 25); i++) {
+            labels.push(`${i}`);
+            if (i === 0) {
+                economiaAcumulada.push(-investimento);
+            } else {
+                acumulado += economiaAnual;
+                economiaAcumulada.push(acumulado);
+            }
+        }
+        
+        if (economiaChart) {
+            economiaChart.destroy();
+        }
+        
+        economiaChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Economia Acumulada (R$)',
+                    data: economiaAcumulada,
+                    borderColor: '#ef6c00',
+                    backgroundColor: 'rgba(239,108,0,0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    pointBackgroundColor: '#e65100',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let value = context.raw;
+                                return 'R$ ' + value.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+                            }
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            line: {
+                                type: 'line',
+                                yMin: 0,
+                                yMax: 0,
+                                borderColor: 'red',
+                                borderWidth: 2,
+                                borderDash: [5, 5]
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Valor Acumulado (R$)',
+                            color: '#666'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return 'R$ ' + value.toLocaleString('pt-BR');
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Anos',
+                            color: '#666'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Selecionar solução pré-definida
+    function selectSolution(tipo) {
+        document.getElementById('tipoIntervencao').value = tipo;
+        presetValues();
+        
+        // Scroll suave para a calculadora
+        document.querySelector('.calculator-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Inicializar com valores padrão
+    window.onload = function() {
+        calcularROI();
+        
+        // Adicionar event listeners para atualização em tempo real
+        const inputs = ['investimento', 'economiaMensal', 'vidaUtil', 'manutencao'];
+        inputs.forEach(id => {
+            document.getElementById(id).addEventListener('input', function() {
+                if (document.getElementById('tipoIntervencao').value !== 'personalizado') {
+                    document.getElementById('tipoIntervencao').value = 'personalizado';
+                }
+                calcularROI();
+            });
+        });
+    };
+</script>
+
+</body>
+</html>
