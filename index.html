@@ -12,23 +12,40 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background: #f4f7fc;
+            /* Imagem de fundo do repositório GitHub Pages */
+            background: url('https://raw.githubusercontent.com/erigutembergmeneses-jpg/conselho-fiscal-condominio-das-contas/main/capa-final.png') no-repeat center center fixed;
+            background-size: cover;
             font-family: 'Inter', sans-serif;
             color: #1a2c3e;
             line-height: 1.5;
             scroll-behavior: smooth;
+            position: relative;
         }
-
-        /* Header hero */
+        
+        /* Camada de overlay escura para melhorar contraste do texto */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: -1;
+        }
+        
+        /* Header hero com fundo escuro transparente */
         .hero {
-            background: linear-gradient(135deg, #0b2b3b 0%, #123e52 100%);
+            background: linear-gradient(135deg, rgba(11, 43, 59, 0.92) 0%, rgba(18, 62, 82, 0.92) 100%);
+            backdrop-filter: blur(2px);
             color: white;
             padding: 2.5rem 1.5rem 2rem;
             text-align: center;
             border-bottom-left-radius: 2rem;
             border-bottom-right-radius: 2rem;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
         }
         .hero h1 {
             font-family: 'Poppins', sans-serif;
@@ -48,7 +65,7 @@
             flex-wrap: wrap;
             margin-top: 1.8rem;
             padding: 1rem;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.12);
             border-radius: 1.5rem;
             backdrop-filter: blur(8px);
         }
@@ -83,7 +100,7 @@
             margin: 0;
         }
         .badge-book {
-            background: rgba(245,166,35,0.2);
+            background: rgba(245,166,35,0.3);
             display: inline-block;
             padding: 0.3rem 1rem;
             border-radius: 60px;
@@ -91,11 +108,11 @@
             margin-top: 1rem;
             font-weight: 500;
         }
-
+        
         /* container principal */
         .container { max-width: 1300px; margin: 2rem auto; padding: 0 1.5rem; }
-
-        /* seção cards */
+        
+        /* seção cards com fundo semi-transparente para legibilidade */
         .section-title {
             font-family: 'Poppins', sans-serif;
             font-size: 1.7rem;
@@ -103,41 +120,43 @@
             margin: 2.5rem 0 1.5rem 0;
             border-left: 6px solid #f5a623;
             padding-left: 1rem;
-            color: #0f2e3f;
-            background: linear-gradient(90deg, #f8fafc 0%, transparent 100%);
+            color: white;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, transparent 100%);
             border-radius: 0 12px 12px 0;
         }
         .section-title i { color: #f5a623; margin-right: 0.6rem; }
         .section-title small {
             font-size: 0.8rem;
             font-weight: normal;
-            color: #5a7e94;
+            color: #f0f0f0;
             margin-left: 0.8rem;
         }
-
+        
         .qr-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1.8rem;
             margin-bottom: 2rem;
         }
-
+        
         .qr-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(4px);
             border-radius: 1.5rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             transition: transform 0.2s ease, box-shadow 0.2s;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            border: 1px solid #e2edf2;
+            border: 1px solid rgba(255,255,255,0.4);
         }
         .qr-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.3);
         }
         .card-header {
-            background: linear-gradient(135deg, #eef4f8 0%, #e8f0f5 100%);
+            background: rgba(238, 244, 248, 0.9);
             padding: 1rem 1.2rem;
             border-bottom: 1px solid #dce6ec;
         }
@@ -159,7 +178,6 @@
             text-align: center;
         }
         
-        /* Imagem representativa no lugar do QR Code */
         .resource-icon {
             font-size: 3.5rem;
             color: #1c5a6a;
@@ -213,17 +231,17 @@
             color: #0b4b66;
             border-color: #b8cfdd;
         }
-
+        
         hr { margin: 0.5rem 0; border-color: #e2edf2; }
-
-        /* Modal da Calculadora */
+        
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
             z-index: 1000;
             left: 0; top: 0;
             width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.6);
+            background-color: rgba(0,0,0,0.7);
             align-items: center;
             justify-content: center;
             padding: 1rem;
@@ -306,13 +324,14 @@
             text-align: center;
             margin: 0.5rem 0;
         }
-
+        
         footer {
             text-align: center;
             padding: 2rem 1rem;
-            background: #e2edf2;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(5px);
             margin-top: 3rem;
-            color: #2c5a74;
+            color: #eef4fc;
             font-size: 0.85rem;
             border-top-left-radius: 1.5rem;
             border-top-right-radius: 1.5rem;
@@ -324,7 +343,7 @@
             gap: 1.5rem;
             flex-wrap: wrap;
         }
-
+        
         @media (max-width: 700px) {
             .hero h1 { font-size: 1.7rem; }
             .section-title { font-size: 1.4rem; }
@@ -356,48 +375,13 @@
 <div class="container">
     
     <!-- ============================================ -->
-    <!-- SEÇÃO 1: APRESENTAÇÃO E SUPORTE -->
-    <!-- ============================================ -->
-    <div class="section-title">
-        <i class="fas fa-flag-checkered"></i> APRESENTAÇÃO & PRIMEIROS PASSOS
-        <small>Conheça o projeto e tire dúvidas</small>
-    </div>
-    <div class="qr-grid">
-        <div class="qr-card">
-            <div class="card-header"><h3><i class="fas fa-video"></i> Vídeo de apresentação</h3></div>
-            <div class="card-body">
-                <div class="resource-icon"><i class="fas fa-play-circle"></i></div>
-                <div class="resource-desc"><i class="fas fa-globe"></i> Site oficial do autor</div>
-                <a href="#" class="btn-link" onclick="openFallback('https://erigutembergmeneses.com.br/apresentacao', 'Vídeo de apresentação')"><i class="fas fa-external-link-alt"></i> Assistir vídeo</a>
-            </div>
-        </div>
-        <div class="qr-card">
-            <div class="card-header"><h3><i class="fas fa-clipboard-list"></i> Checklist Digital Demo</h3></div>
-            <div class="card-body">
-                <div class="resource-icon"><i class="fas fa-check-square"></i></div>
-                <div class="resource-desc"><i class="fas fa-mobile-alt"></i> Versão demonstrativa</div>
-                <a href="#" class="btn-link" onclick="openFallback('https://erigutembergmeneses.com.br/checklist-demo', 'Checklist demo')"><i class="fas fa-arrow-right"></i> Testar demo</a>
-            </div>
-        </div>
-        <div class="qr-card">
-            <div class="card-header"><h3><i class="fas fa-headset"></i> Dúvidas técnicas</h3></div>
-            <div class="card-body">
-                <div class="resource-icon"><i class="fas fa-envelope"></i></div>
-                <div class="resource-desc"><i class="fas fa-life-ring"></i> Suporte especializado</div>
-                <a href="duvidas-tecnicas.html" class="btn-link" target="_blank"><i class="fas fa-comment"></i> Tirar dúvida</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================ -->
-    <!-- SEÇÃO 2: BASE LEGAL E FISCALIZAÇÃO -->
+    <!-- SEÇÃO 1: BASE LEGAL E FISCALIZAÇÃO -->
     <!-- ============================================ -->
     <div class="section-title">
         <i class="fas fa-gavel"></i> BASE LEGAL & FISCALIZAÇÃO
         <small>Regulamento • Quóruns • Responsabilidade civil</small>
     </div>
     <div class="qr-grid">
-        
         <div class="qr-card">
             <div class="card-header"><h3><i class="fas fa-file-contract"></i> Regulamento do Conselho</h3></div>
             <div class="card-body">
@@ -430,7 +414,7 @@
     </div>
 
     <!-- ============================================ -->
-    <!-- SEÇÃO 3: PRESTAÇÃO DE CONTAS & TRANSPARÊNCIA -->
+    <!-- SEÇÃO 2: PRESTAÇÃO DE CONTAS & TRANSPARÊNCIA -->
     <!-- ============================================ -->
     <div class="section-title">
         <i class="fas fa-chart-pie"></i> PRESTAÇÃO DE CONTAS & TRANSPARÊNCIA
@@ -466,48 +450,47 @@
     </div>
 
     <!-- ============================================ -->
-    <!-- SEÇÃO 4: ESTRATÉGIA & SUSTENTABILIDADE -->
+    <!-- SEÇÃO 3: ESTRATÉGIA & SUSTENTABILIDADE -->
     <!-- ============================================ -->
     <div class="section-title">
         <i class="fas fa-leaf"></i> ESTRATÉGIA & SUSTENTABILIDADE
         <small>ESG • Eficiência energética • Gestão de riscos</small>
     </div>
     <div class="qr-grid">
-        <div class="card-header"><h3><i class="fas fa-chart-simple"></i> Dashboard ESG</h3></div>
-<div class="card-body">
-    <div class="resource-icon"><i class="fas fa-seedling"></i></div>
-    <div class="resource-desc">🌱 Sustentabilidade + métricas interativas • Gráficos • Checklist ESG • ROI</div>
-    <a href="dashboard-esg.html" class="btn-link" target="_blank">
-        <i class="fas fa-chart-line"></i> Explorar ESG
-    </a>
-</div>
+        <div class="qr-card">
+            <div class="card-header"><h3><i class="fas fa-chart-simple"></i> Dashboard ESG</h3></div>
+            <div class="card-body">
+                <div class="resource-icon"><i class="fas fa-seedling"></i></div>
+                <div class="resource-desc">🌱 Sustentabilidade + métricas interativas • Gráficos • Checklist ESG • ROI</div>
+                <a href="dashboard-esg.html" class="btn-link" target="_blank">
+                    <i class="fas fa-chart-line"></i> Explorar ESG
+                </a>
+            </div>
         </div>
         <div class="qr-card">
-    <div class="card-header"><h3><i class="fas fa-solar-panel"></i> ROI Eficiência Energética</h3></div>
-    <div class="card-body">
-        <div class="resource-icon"><i class="fas fa-lightbulb"></i></div>
-        <div class="resource-desc">⚡ Economia e retorno • Calcule payback, ROI e redução de CO₂</div>
-        <a href="roi-energia.html" class="btn-link" target="_blank">
-            <i class="fas fa-calculator"></i> Calcular ROI
-        </a>
-    </div>
-</div>
+            <div class="card-header"><h3><i class="fas fa-solar-panel"></i> ROI Eficiência Energética</h3></div>
+            <div class="card-body">
+                <div class="resource-icon"><i class="fas fa-lightbulb"></i></div>
+                <div class="resource-desc">⚡ Economia e retorno • Calcule payback, ROI e redução de CO₂</div>
+                <a href="roi-energia.html" class="btn-link" target="_blank">
+                    <i class="fas fa-calculator"></i> Calcular ROI
+                </a>
+            </div>
         </div>
         <div class="qr-card">
-    <div class="card-header"><h3><i class="fas fa-map"></i> Mapa de Riscos</h3></div>
-    <div class="card-body">
-        <div class="resource-icon"><i class="fas fa-exclamation-triangle"></i></div>
-        <div class="resource-desc">⚠️ Identificação de riscos • Matriz interativa • Plano de ação</div>
-        <a href="mapa-riscos.html" class="btn-link" target="_blank">
-            <i class="fas fa-draw-polygon"></i> Acessar mapa
-        </a>
-    </div>
-</div>
+            <div class="card-header"><h3><i class="fas fa-map"></i> Mapa de Riscos</h3></div>
+            <div class="card-body">
+                <div class="resource-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="resource-desc">⚠️ Identificação de riscos • Matriz interativa • Plano de ação</div>
+                <a href="mapa-riscos.html" class="btn-link" target="_blank">
+                    <i class="fas fa-draw-polygon"></i> Acessar mapa
+                </a>
+            </div>
         </div>
     </div>
 
     <!-- ============================================ -->
-    <!-- SEÇÃO 5: COMUNIDADE & FERRAMENTAS -->
+    <!-- SEÇÃO 4: COMUNIDADE & FERRAMENTAS -->
     <!-- ============================================ -->
     <div class="section-title">
         <i class="fas fa-users"></i> COMUNIDADE & FERRAMENTAS
@@ -685,6 +668,5 @@
         return false;
     }
 </script>
-
 </body>
 </html>
